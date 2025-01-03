@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Loader from "../components/Loader";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
@@ -6,7 +6,25 @@ import ProgressScrollButton from "../components/ProgressScrollButton";
 import CareerHeader from "../components/Career/CareerHeader";
 import SectionHeader from "../components/Career/SectionHeader";
 import CareerMarqueeSection from "../components/Career/CareerMarquee";
+import SectionContent from "../components/Career/SectionContent";
+import JobOverlay from "../components/popup/jobOverlay";
 const Career = () => {
+
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [selectedJob, setSelectedJob] = useState(null);
+
+    // Function to open the modal with the selected image
+    const openModal = (details) => {
+        setSelectedJob(details);
+        setIsModalVisible(true);
+    };
+
+    // Function to close the modal
+    const closeModal = () => {
+        setIsModalVisible(false);
+        setSelectedJob(null);
+    };
+
     return (
         <div className="startup-one">
             {/* Loader */}
@@ -26,9 +44,11 @@ const Career = () => {
                     <CareerHeader />
                     <SectionHeader />
                     <CareerMarqueeSection />
+                    <SectionContent openModal={openModal}/>
                 </main>
             </div>
 
+            <JobOverlay isVisible={isModalVisible} details={selectedJob} onClose={closeModal}/>
         </div>
     )
 }

@@ -51,6 +51,22 @@ const CareerMarqueeSection = () => {
               </div>
             ))}
           </div>
+          <div className="box">
+            {items.map((item, index) => (
+              <div key={index} className="item flex justify-center flex-col gap-2">
+                <h4 className="d-flex align-items-center gap-2">
+                  <div className="w-[70px] p-2">
+                    <img
+                      className="object-cover"
+                      src={item.src}
+                      alt={item.alt}
+                    />
+                  </div>
+                  <span className="tracking-widest">{item.title}</span>
+                </h4>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

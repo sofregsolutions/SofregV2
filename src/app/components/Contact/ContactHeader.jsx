@@ -4,7 +4,7 @@ const ContactHeader = () => {
   return (
     <header
       className="page-header-cerv bg-img section-padding"
-      style={{ backgroundImage: "url('assets/imgs/header/2.jpg')" }}
+      style={{ backgroundImage: "url('assets/header/contact_us_header.jpg')" }}
       data-overlay-dark="4"
     >
       <div className="container pt-100">

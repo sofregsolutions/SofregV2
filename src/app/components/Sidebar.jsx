@@ -13,7 +13,7 @@ const Sidebar = () => {
 
     return (
         <div className="hamenu one-scroll">
-            <div className="logo icon-img-250">
+            <div className="logo w-[200px]">
                 <img className="" src='/assets/imgs/logo-light.png' alt="" />
             </div>
             <div className="close-menu cursor-pointer ti-close"></div>

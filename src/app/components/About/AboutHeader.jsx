@@ -4,7 +4,7 @@ const AboutHeader = () => {
   return (
     <header
       className="page-header-cerv bg-img section-padding"
-      data-background="assets/imgs/header/2.jpg"
+      data-background="assets/header/about_header.jpg"
       data-overlay-dark="4"
     >
       <div className="container pt-100 ontop">

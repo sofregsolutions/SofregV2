@@ -4,7 +4,7 @@ const CareerHeader = () => {
   return (
     <header
       className="page-header-cerv bg-img section-padding"
-      style={{ backgroundImage: "url('assets/career/header2.jpg')" }}
+      style={{ backgroundImage: "url('assets/header/career_header.jpg')" }}
       data-overlay-dark="4"
     >
       <div className="container pt-100">
