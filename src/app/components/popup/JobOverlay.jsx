@@ -54,7 +54,82 @@ const JobOverlay = ({ details, onClose }) => {
                             </span>
 
                             <span className="phone:text-xl"> Join our team and be a part of a forward-thinking company that values innovation and creativity!</span>
-                            <span className="phone:text-xl">  Interested candidates should send their resume and portfolio to <a href="mailto:sofreginfo@gmail.com" className="text-color-primary-blue cursor-pointer">[sofreginfo@gmail.com]</a> . Applications will be reviewed on a rolling basis until the positions are filled.</span>
+                            <span className="phone:text-xl">  Interested candidates should send their resume and portfolio by clicking the button below. </span>
+                            <span className="phone:text-xl">  Applications will be reviewed on a rolling basis until the positions are filled. </span>
+                            <a href="mailto:sofreginfo@gmail.com" className="hover:text-color-primary-blue cursor-pointer border w-fit p-2 rounded-sm">sofreginfo@gmail.com</a>
+                        
+                            {/* <span className="bg-[#181616] p-2 rounded-sm">
+                                <form action="#" method="post" className="flex flex-col gap-2">
+                                    <span className="phone:text-xl font-bold text-color-primary-blue">Apply as {details.title}</span>
+                                    <span className="flex flex-col">
+                                        <label htmlFor="name">Name</label>
+                                        <input
+                                                id="form_name"
+                                                type="text"
+                                                name="name"
+                                                placeholder="Name"
+                                                className="p-2 text-color-dark rounded-sm"
+                                                // value={userInfo.name}
+                                                // onChange={handleInputChange}
+                                                
+                                            />
+                                    </span>
+                                    <span className="flex flex-col">
+                                        <label htmlFor="name">Address</label>
+                                        <input
+                                                id="form_address"
+                                                type="text"
+                                                name="address"
+                                                placeholder="Address"
+                                                className="p-2 text-color-dark rounded-sm"
+                                                // value={userInfo.name}
+                                                // onChange={handleInputChange}
+                                                
+                                            />
+                                    </span>
+                                    <span className="flex flex-col">
+                                        <label htmlFor="name">Contact No.</label>
+                                        <input
+                                                id="form_contact"
+                                                type="text"
+                                                name="contact_no"
+                                                placeholder="Contact Number"
+                                                className="p-2 text-color-dark rounded-sm"
+                                                // value={userInfo.name}
+                                                // onChange={handleInputChange}
+                                                
+                                            />
+                                    </span>
+                                    <span className="flex flex-col">
+                                        <label htmlFor="name">Resume/CV</label>
+                                        <input
+                                                id="form_resume"
+                                                type="file"
+                                                name="resume"
+                                                placeholder="Resume/CV"
+                                                className="p-2 rounded-sm"
+                                                // value={userInfo.name}
+                                                // onChange={handleInputChange}
+                                                
+                                            />
+                                    </span>
+                                    <span className="flex flex-col">
+                                        <label htmlFor="name">Portfolio</label>
+                                        <input
+                                                id="form_resume"
+                                                type="file"
+                                                name="resume"
+                                                placeholder="Resume/CV"
+                                                className="p-2 rounded-sm"
+                                                // value={userInfo.name}
+                                                // onChange={handleInputChange}
+                                                
+                                            />
+                                    </span>
+
+                                    <button type="submit" className="border p-2">Apply Now.</button>
+                                </form>
+                            </span> */}
                         </span>
                     </div>
                 </span>

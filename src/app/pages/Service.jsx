@@ -84,7 +84,7 @@ const Services = () => {
 
 
             <FooterDetailed />
-            <Footer />
+            {/* <Footer /> */}
             </div>
             {/* Modal Component */}
             <Modal isVisible={isModalVisible} imageSrc={selectedImage?.src} type={selectedImage?.type} onClose={closeModal} />

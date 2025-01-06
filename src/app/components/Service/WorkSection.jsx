@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import imagesLoaded from "imagesloaded";
 import Isotope from "isotope-layout";
 import { categories } from "../../data/categories";
+import BouncingText from "./BouncingText";
 const WorkSection = ({ openModal }) => {
   const [imagesAreLoaded, setImagesAreLoaded] = useState(false); // Track if all images are loaded
 
@@ -204,8 +205,9 @@ const WorkSection = ({ openModal }) => {
             {categories.map((item) => (
               <div key={item.id} className={`col-lg-4 col-md-6 transition-transform transform scale-100 hover:scale-110 duration-300 items`}>
                 <div className="item mb-40">
-                  <div className="skeleton-loader flex items-center justify-center h-52 bg-gray-200 animate-pulse">
-                    <span className="loader-spinner text-lg text-gray-500">Loading...</span>
+                  <div className="skeleton-loader flex items-center justify-center h-60 bg-gray-200 animate-pulse">
+                    {/* <span className="loader-spinner text-lg text-gray-500">Loading...</span> */}
+                    <BouncingText text="Loading..." />
                   </div>
                 </div>
               </div>
@@ -242,6 +244,7 @@ const WorkSection = ({ openModal }) => {
                   <img
                     src={item.imgSrc[0]}
                     alt={item.title}
+                    loading="lazy"
                   // className={isImageLoaded(item.id) ? "opacity-100" : "opacity-0"}
                   // onLoad={() => handleImageLoad(item.id)}
                   />

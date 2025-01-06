@@ -5,25 +5,41 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/png" href="/favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap"
-    rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Allerta+Stencil&display=swap" rel="stylesheet">
-
-  <!-- {{-- font awesome --}} -->
-  <link rel="stylesheet" data-purpose="Layout StyleSheet" title="Web Awesome"
-    href="/css/app-wa-462d1fe84b879d730fe2180b0e0354e0.css?vsn=d" />
-  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css" />
-  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/sharp-thin.css" />
-  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/sharp-solid.css" />
-  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/sharp-regular.css" />
-  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/sharp-light.css" />
-  <!-- CSS files from the public folder -->
-  <link rel="stylesheet" href="/assets/css/satoshi.css">
-  <link rel="stylesheet" href="/assets/css/plugins.css">
-  <link rel="stylesheet" href="/assets/css/style.css">
-  <link rel="stylesheet" href="/assets/css/sphere.css">
-  <link rel="stylesheet" href="/assets/css/image-viewer.css">
-  <link rel="stylesheet" href="/assets/css/video.css">
+    <!-- Preload Critical Google Fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Allerta+Stencil&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+    <!-- Fallback for Noscript -->
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Allerta+Stencil&display=swap">
+    </noscript>
+  
+    <!-- Preload and Inline Critical CSS -->
+    <link rel="preload" href="/assets/css/satoshi.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+      <link rel="stylesheet" href="/assets/css/satoshi.css">
+    </noscript>
+  
+    <!-- Plugin and Main Styles -->
+    <link rel="stylesheet" href="/assets/css/plugins.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/sphere.css">
+    <link rel="stylesheet" href="/assets/css/image-viewer.css">
+    <link rel="stylesheet" href="/assets/css/video.css">
+  
+    <!-- Font Awesome (Optimized Order) -->
+    <link rel="preload" href="/css/app-wa-462d1fe84b879d730fe2180b0e0354e0.css?vsn=d" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+      <link rel="stylesheet" href="/css/app-wa-462d1fe84b879d730fe2180b0e0354e0.css?vsn=d">
+    </noscript>
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/sharp-thin.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/sharp-solid.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/sharp-regular.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/sharp-light.css">
+  
+  
   <title>Sofreg Solutions</title>
 
   <!-- SEO Meta Tags -->

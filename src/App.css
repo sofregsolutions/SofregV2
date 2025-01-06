@@ -12,6 +12,27 @@ body{
 }
 
 
+.bouncing-text {
+  display: flex;
+  gap: 2px; /* Adjust spacing between letters */
+}
+
+.bouncing-letter {
+  display: inline-block;
+  animation: bounce 1s ease-in-out infinite;
+  animation-delay: 0s; /* Delay is dynamically applied in inline styles */
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px); /* Adjust bounce height */
+  }
+}
+
+
 
 /* .content h2:nth-child(1)
 {

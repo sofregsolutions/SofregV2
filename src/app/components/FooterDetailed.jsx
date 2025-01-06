@@ -100,12 +100,12 @@ const FooterDetailed = () => {
               
             </div>
           </div>
-          <div className="text-center pt-30 pb-30 sub-bg mt-80">
+          {/* <div className="text-center pt-30 pb-30 sub-bg mt-80">
             <p className="fz-14">
-              {/* © {new Date().getFullYear()} Sofreg Solutions {" "} */}
+              © {new Date().getFullYear()} Sofreg Solutions {" "}
               
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>
