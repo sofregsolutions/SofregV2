@@ -1,10 +1,158 @@
-import React from "react";
+import React, { useState } from "react";
 import { formatDistanceToNow } from 'date-fns';
+import axios from "axios";
+import Swal from 'sweetalert2';
 
 const JobOverlay = ({ details, onClose }) => {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        address: '',
+        contact: '',
+        portfolioPdf: null,
+        portfolioUrl: '',
+        resumePdf: null,
+        subject: details ? details.title : "Default Subject",
+        body: 'This is the generated test for phpmailer',
+        securityCode: '123456',
+    });
+
+    const [responseMessage, setResponseMessage] = useState('');
+    const [loading, setLoading] = useState(false);
+
     if (!details) return null; // If details are not available, do not render the modal.
 
-    console.log(details)
+    // Handle input changes
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
+    // Handle file input changes
+    const handleFileChange = (e) => {
+        const { name, files } = e.target;
+        setFormData({
+            ...formData,
+            [name]: files[0],
+        });
+    };
+
+
+    // Handle form submission
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        // Check if required fields are present
+        if (
+            !formData.portfolioPdf && !formData.portfolioUrl||
+            !formData.resumePdf ||
+            !formData.name ||
+            !formData.email ||
+            !formData.address ||
+            !formData.contact ||
+            !formData.subject ||
+            !formData.body ||
+            !formData.securityCode
+        ) {
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Please fill all fields and upload both PDFs.',
+            });
+            setResponseMessage('Please fill all fields and upload both PDFs.');
+            return;
+        }
+
+        setLoading(true);
+        const data = new FormData();
+
+        console.log(formData)
+        data.append('name', formData.name);
+        data.append('email', formData.email);
+        data.append('address', formData.address);
+        data.append('contact', formData.contact);
+        data.append('portfolio_pdf', formData.portfolioPdf);
+        data.append('portfolio_url', formData.portfolioUrl);
+        data.append('resume_pdf', formData.resumePdf);
+        data.append('subject', details.title);
+        data.append('body', formData.body);
+        data.append('security_code', formData.securityCode); // Add security code
+
+        try {
+
+            // Display SweetAlert with loading spinner while the email is being processed
+            const swalInstance = Swal.fire({
+                title: 'Sending Application...',
+                text: 'Please wait while we process your request.',
+                icon: 'info',  // You can change the icon to 'info' or 'loading'
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                willOpen: () => {
+                    Swal.showLoading(); // Show the loading spinner
+                },
+            });
+
+            // Sending POST request to PHP API (Ensure your PHP API is running at this URL)
+            const response = await axios.post('http://localhost/sofreg_mailer/send-email.php', data, {
+                headers: {
+                    'Content-Type': 'multipart/form-data', // Ensures the PDFs are sent as files
+                },
+            });
+
+            setResponseMessage(response.data.success || response.data.error);
+
+            // Show success alert if email is sent successfully
+            if (response.data.success) {
+                swalInstance.close(); // Close the loading alert
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Email Sent',
+                    text: response.data.success,  // Show the success message from the API
+                }).then(() => {
+                    // Reset the form after success
+                    setFormData({
+                        name: '',
+                        email: '',
+                        address: '',
+                        contact: '',
+                        portfolioPdf: null,
+                        portfolioUrl: '',
+                        resumePdf: null,
+                        subject: '',
+                        body: '',
+                        securityCode: '',
+                    });
+                });;
+            } else {
+                // Show error alert if there's an issue in the response
+                swalInstance.close(); // Close the loading alert
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: response.data.error || 'Something went wrong!',
+                })
+            }
+
+        } catch (error) {
+            console.error('Error sending email:', error);
+
+            // Show error alert in case of any issues during the request
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to Send Email',
+                text: 'Failed to send email. Please try again.',
+            });
+
+            setResponseMessage('Failed to send email. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div
             id="image-viewer"
@@ -48,8 +196,8 @@ const JobOverlay = ({ details, onClose }) => {
                             <span className="phone:text-xl text-gray-300">{details.description}</span>
                             <span className="flex-1 text-xl font-bold text-color-primary-blue"><i className="fas fa-check-circle text-color-primary-blue text-xl"></i> Key Responsibilities: </span>
                             <span className="flex flex-col gap-2 phone:text-xl">
-                                {details.responsibilities.map((item) => (
-                                    <span><span className=""><i class="fa-solid fa-circle text-xs text-color-primary-blue"></i></span> {item}</span>
+                                {details.responsibilities.map((item, index) => (
+                                    <span key={index}><span className=""><i className="fa-solid fa-circle text-xs text-color-primary-blue"></i></span> {item}</span>
                                 ))}
                             </span>
 
@@ -57,79 +205,108 @@ const JobOverlay = ({ details, onClose }) => {
                             <span className="phone:text-xl">  Interested candidates should send their resume and portfolio by clicking the button below. </span>
                             <span className="phone:text-xl">  Applications will be reviewed on a rolling basis until the positions are filled. </span>
                             <a href="mailto:sofreginfo@gmail.com" className="hover:text-color-primary-blue cursor-pointer border w-fit p-2 rounded-sm">sofreginfo@gmail.com</a>
-                        
-                            {/* <span className="bg-[#181616] p-2 rounded-sm">
-                                <form action="#" method="post" className="flex flex-col gap-2">
+
+                            <span className="bg-[#181616] p-2 rounded-sm">
+                                <form onSubmit={handleSubmit} className="flex flex-col gap-2">
                                     <span className="phone:text-xl font-bold text-color-primary-blue">Apply as {details.title}</span>
                                     <span className="flex flex-col">
                                         <label htmlFor="name">Name</label>
                                         <input
-                                                id="form_name"
-                                                type="text"
-                                                name="name"
-                                                placeholder="Name"
-                                                className="p-2 text-color-dark rounded-sm"
-                                                // value={userInfo.name}
-                                                // onChange={handleInputChange}
-                                                
-                                            />
+                                            id="form_name"
+                                            type="text"
+                                            name="name"
+                                            placeholder="Name"
+                                            className="p-2 text-color-dark rounded-sm"
+                                            value={formData.name}
+                                            onChange={handleChange}
+                                            required
+                                        />
                                     </span>
                                     <span className="flex flex-col">
                                         <label htmlFor="name">Address</label>
                                         <input
-                                                id="form_address"
-                                                type="text"
-                                                name="address"
-                                                placeholder="Address"
-                                                className="p-2 text-color-dark rounded-sm"
-                                                // value={userInfo.name}
-                                                // onChange={handleInputChange}
-                                                
-                                            />
+                                            id="form_address"
+                                            type="text"
+                                            name="address"
+                                            placeholder="Address"
+                                            className="p-2 text-color-dark rounded-sm"
+                                            value={formData.address}
+                                            onChange={handleChange}
+                                            required
+                                        />
                                     </span>
                                     <span className="flex flex-col">
                                         <label htmlFor="name">Contact No.</label>
                                         <input
-                                                id="form_contact"
-                                                type="text"
-                                                name="contact_no"
-                                                placeholder="Contact Number"
-                                                className="p-2 text-color-dark rounded-sm"
-                                                // value={userInfo.name}
-                                                // onChange={handleInputChange}
-                                                
-                                            />
+                                            id="form_contact"
+                                            type="text"
+                                            name="contact"
+                                            placeholder="Contact Number"
+                                            className="p-2 text-color-dark rounded-sm"
+                                            value={formData.contact}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </span>
+                                    <span className="flex flex-col">
+                                        <label htmlFor="name">Email</label>
+                                        <input
+                                            id="form_email"
+                                            type="email"
+                                            name="email"
+                                            placeholder="Email"
+                                            className="p-2 text-color-dark rounded-sm"
+                                            value={formData.email}
+                                            onChange={handleChange}
+                                            
+                                        />
+                                        
+
                                     </span>
                                     <span className="flex flex-col">
                                         <label htmlFor="name">Resume/CV</label>
                                         <input
-                                                id="form_resume"
-                                                type="file"
-                                                name="resume"
-                                                placeholder="Resume/CV"
-                                                className="p-2 rounded-sm"
-                                                // value={userInfo.name}
-                                                // onChange={handleInputChange}
-                                                
-                                            />
+                                            id="form_resume"
+                                            type="file"
+                                            name="resumePdf"
+                                            placeholder="Resume/CV"
+                                            className="p-2 rounded-sm"
+                                            onChange={handleFileChange}
+                                            accept=".pdf"
+                                            required
+                                        />
                                     </span>
                                     <span className="flex flex-col">
                                         <label htmlFor="name">Portfolio</label>
                                         <input
-                                                id="form_resume"
-                                                type="file"
-                                                name="resume"
-                                                placeholder="Resume/CV"
-                                                className="p-2 rounded-sm"
-                                                // value={userInfo.name}
-                                                // onChange={handleInputChange}
-                                                
-                                            />
+                                            id="form_portfolio"
+                                            type="file"
+                                            name="portfolioPdf"
+                                            placeholder="Portfolio"
+                                            className="p-2 rounded-sm"
+                                            onChange={handleFileChange}
+                                            accept=".pdf"
+                                            
+
+                                        />
+                                        <p>OR</p>
+                                        <input
+                                            type="text"
+                                            name="portfolioUrl"
+                                            value={formData.portfolioUrl}
+                                            placeholder="Enter portfolio URL"
+                                            className="p-2 text-color-dark rounded-sm"
+                                            onChange={handleChange}
+                                        />
                                     </span>
 
-                                    <button type="submit" className="border p-2">Apply Now.</button>
+                                    <button className="border p-2" type="submit" disabled={loading}>
+                                        {loading ? 'Sending...' : 'Send Email'}
+                                    </button>
                                 </form>
-                            </span> */}
+
+                                {/* {responseMessage && <p>{responseMessage}</p>} */}
+                            </span>
                         </span>
                     </div>
                 </span>
