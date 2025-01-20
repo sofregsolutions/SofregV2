@@ -4,10 +4,7 @@ import './index.css'
 import App from './App.jsx'
 // import { ModalProvider } from "./app/components/Modal.jsx";
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    {/* <ModalProvider > */}
+  // <StrictMode>
     <App />
-
-    {/* </ModalProvider> */}
-  </StrictMode>,
+  // </StrictMode>
 )
