@@ -239,14 +239,14 @@ const MultiStepForm = ({ isOpen, onClose }) => {
         <div className="fixed inset-0 bg-black bg-opacity-75 z-[99999] flex justify-center items-center zoomin">
             <form onSubmit={handleSubmit} className="bg-[#1e1b1b] rounded-sm shadow-lg w-96 tablet:w-[60%] p-4" id="multiStepForm">
                 {/* Header */}
-                <div className="px-6 py-2 text-center flex justify-between items-center">
+                <div className="px-6 py-2 text-center flex justify-between items-center border">
                     <span></span>
                     <span className="text-2xl tablet:text-4xl font-bold text-white">Design a Quote</span>
                     <span className="font-bold text-xl text-red-500 hover:cursor-pointer hover:text-red-700 modal-close" onClick={() => {
                         resetForm(); // Reset the form after submission
                         onClose();
                     }}>
-                        <i className="fa-solid fa-x"></i>
+                        x
                     </span>
                 </div>
 
