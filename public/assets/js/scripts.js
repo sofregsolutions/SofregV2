@@ -1,13 +1,4 @@
-/*-----------------------------------------------------------------------------------
 
-    Theme Name: GeekFolio
-    Theme URI: http://
-    Description: Creative Agency & Portfolio
-    Author: UI-ThemeZ
-    Author URI: http://themeforest.net/user/UI-ThemeZ
-    Version: 1.0
-
------------------------------------------------------------------------------------*/
 
 $(document).ready(function(){
     $(function () {
@@ -772,7 +763,7 @@ $(document).ready(function(){
 
     var body = $('body');
     body.addClass('loaded');
-    setTimeout(function () {
+    setTimeout(async function () {
         body.removeClass('loaded');
         console.log('removed!')
         // window.location.reload(true)

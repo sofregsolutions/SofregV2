@@ -31,18 +31,19 @@ const Home = () => {
   const handleFormOpen = () => setIsFormOpen(true);
   const handleFormClose = () => setIsFormOpen(false);
 
+  
   return (
-    <div className="startup-one">
+    <div className="startup-one overflow-x-hidden">
       {/* Loader */}
       <Loader />
 
       {/* Cursor */}
-      <div className="cursor"></div>
+      <div className="cursor overflow-x-hidden"></div>
 
       {/* Progress Scroll Button */}
       <ProgressScrollButton />
 
-      <div id="smooth-wrapper">
+      <div id="smooth-wrapper overflow-x-hidden">
 
         {/* Navbar */}
         <Navbar />
@@ -52,13 +53,13 @@ const Home = () => {
         <Sidebar />
         {/* End of Sidebar */}
 
-        <div id="smooth-content">
+        <div id="smooth-content overflow-x-hidden">
 
-            <main className="main-bg">
+            <main className="main-bg overflow-x-hidden">
 
               {/* Header */}
               <Header onOpenForm={handleFormOpen}/>
-              <div className="text-center py-10">
+              <div className="text-center py-10 overflow-x-hidden">
                   <h1 className="text-2xl mb-2"><span className="font-bold text-color-primary-blue">150+</span> Projects Successfully Delivered With Many More on the Horizon!</h1>
                 <MarqueeSection2 />
               </div>

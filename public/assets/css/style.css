@@ -1,14 +1,5 @@
 @charset "UTF-8";
-/*-----------------------------------------------------------------------------------
 
-    Theme Name: Geekfolio
-    Theme URI: http://
-    Description: Creative Agency & Portfolio
-    Author: UI-ThemeZ
-    Author URI: http://themeforest.net/user/UI-ThemeZ
-    Version: 1.0
-
------------------------------------------------------------------------------------*/
 /* Variables
 -----------------------------------------------------------------*/
 /* Typography
@@ -26,8 +17,8 @@ body {
   color: #fff;
   background-color: #1a1a1a;
   font-size: 16px;
-  font-family: 'Poppins', sans-serif;
-  font-family: 'Satoshi-Variable';
+  font-family: 'Poppins', sans-serif !important;
+  font-family: 'Satoshi-Variable' !important;
   overflow-x: hidden !important;
 }
 

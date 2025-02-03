@@ -73,7 +73,7 @@ const AboutSectionFooter = () => {
               <div className="d-flex align-items-center">
                 <div>
                   <div className="info">
-                    <h6 className="font-bold text-xl tracking-wider">Riginald <br /> Barawid</h6>
+                    <h6 className="font-bold text-xl tracking-wider">Reginald <br /> Barawid</h6>
                     <p className="nowrap text-base mt-1 tracking-wider">Director</p>
                   </div>
                 </div>
