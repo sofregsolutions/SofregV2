@@ -69,7 +69,7 @@ const AboutSectionFooter = () => {
         <div className="row lg-marg">
           {/* Left Block */}
           <div className="col-lg-6">
-            <div className="left-block mt-100 md-mb50">
+            <div className="left-block mt-100 md-mb50 relative">
               <div className="d-flex align-items-center">
                 <div>
                   <div className="info">
@@ -83,8 +83,9 @@ const AboutSectionFooter = () => {
                   </div>
                 </div>
               </div>
-              <div className="mz-shap">
+              <div className="mz-shap absolute">
                 <svg
+                className="absolute laptop:-bottom-10 laptop:-left-10"
                   height="100%"
                   viewBox="0 0 610 547"
                   fill="none"
