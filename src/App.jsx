@@ -22,9 +22,9 @@ function App() {
   // }, [location.pathname]); // Only run when pathname changes
 
   if (process.env.NODE_ENV === 'development') {
-    // console.log = () => {}; // Disable console.log
-    // console.warn = () => {}; // Disable console.warn
-    // console.error = () => {}; // Disable console.error
+    console.log = () => {}; // Disable console.log
+    console.warn = () => {}; // Disable console.warn
+    console.error = () => {}; // Disable console.error
   }
   
 
