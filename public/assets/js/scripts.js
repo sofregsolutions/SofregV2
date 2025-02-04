@@ -98,7 +98,7 @@ $(document).ready(function(){
         }
     
         // Initial attachment of event listeners
-        attachMenuListeners();
+        // attachMenuListeners();
     
         // // Reattach the listeners when the page changes or a new one is loaded
         // $(window).on('popstate', function () {
