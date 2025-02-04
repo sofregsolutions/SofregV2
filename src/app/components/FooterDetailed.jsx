@@ -23,7 +23,7 @@ const FooterDetailed = () => {
                   </li>
                   <li className="hover-this cursor-pointer ml-50">
                     <a href="tel:+639177070531" className="hover-anim">
-                    <i className="fa-brands fa-whatsapp mr-10 text-md"></i> Whatsapp
+                    <i className="fab fa-whatsapp mr-10 text-md"></i> Whatsapp
                     </a>
                   </li>
                   <li className="hover-this cursor-pointer ml-50">
@@ -33,7 +33,7 @@ const FooterDetailed = () => {
                   </li>
                   <li className="hover-this cursor-pointer ml-50">
                     <a href="mailto:sofreginfo@gmail.com" className="hover-anim">
-                    <i className="fa-regular fa-envelope mr-10"></i> Email
+                    <i className="fa fa-envelope mr-10"></i> Email
                     </a>
                   </li>
                 </ul>

@@ -9,6 +9,7 @@ import Career from './app/pages/Career';
 import Loader from "./app/components/Loader";
 import {BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import NotFound from "./app/pages/NotFound";
+import Sidebar from "./app/components/Sidebar";
 function App() {
   // const location = useLocation();
   // useEffect(() => {
@@ -32,6 +33,7 @@ function App() {
     <>
     <BrowserRouter>
       {/* {isLoading && <Loader />}  */}
+      {/* <Sidebar /> */}
       <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/services' element={<Services />} />

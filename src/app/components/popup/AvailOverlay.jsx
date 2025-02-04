@@ -137,7 +137,8 @@ const AvailOverlay = ({ isOpen, onClose, data }) => {
             resetForm(); // Reset the form after submission
             onClose()
           }}>
-            <i className="fa-solid fa-x"></i>
+            {/* <i className="fav fa-x"></i> */}
+            <span>x</span>
           </span>
         </div>
 

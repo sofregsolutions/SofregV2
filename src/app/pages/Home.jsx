@@ -25,41 +25,43 @@ import FooterDetailed from "../components/FooterDetailed";
 import MultiStepForm from "../components/popup/MultiStepForm";
 
 const Home = () => {
-
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   const handleFormOpen = () => setIsFormOpen(true);
   const handleFormClose = () => setIsFormOpen(false);
-
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
   
   return (
-    <div className="startup-one overflow-x-hidden">
+    <div className="startup-one">
       {/* Loader */}
       <Loader />
 
       {/* Cursor */}
-      <div className="cursor overflow-x-hidden"></div>
+      <div className="cursor"></div>
 
       {/* Progress Scroll Button */}
       <ProgressScrollButton />
 
-      <div id="smooth-wrapper overflow-x-hidden">
+      <div id="smooth-wrapper">
 
         {/* Navbar */}
-        <Navbar />
+        <Navbar toggleSidebar={toggleSidebar}/>
         {/* End of Navbar */}
 
         {/* Sidebar */}
-        <Sidebar />
+        <Sidebar isOpen={isSidebarOpen}/>
         {/* End of Sidebar */}
 
-        <div id="smooth-content overflow-x-hidden">
+        <div id="smooth-content">
 
-            <main className="main-bg overflow-x-hidden">
+            <main className="main-bg">
 
               {/* Header */}
               <Header onOpenForm={handleFormOpen}/>
-              <div className="text-center py-10 overflow-x-hidden">
+              <div className="text-center py-10">
                   <h1 className="text-2xl mb-2"><span className="font-bold text-color-primary-blue">150+</span> Projects Successfully Delivered With Many More on the Horizon!</h1>
                 <MarqueeSection2 />
               </div>

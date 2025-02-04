@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 import HeaderMarqueeSection from "./HeaderMarquee";
 // import HeaderMarqueeSection2 from "./HeaderMarquee2";
 

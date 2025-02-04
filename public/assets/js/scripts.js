@@ -2,17 +2,17 @@
 
 $(document).ready(function(){
     $(function () {
-
+    
         "use strict";
-
+    
         var wind = $(window);
-
-
+    
+    
         /* =============================================================================
         -----------------------------  Smooth Scroll nav   -----------------------------
         ============================================================================= */
-
-
+    
+    
         $.scrollIt({
             upKey: 38,                // key code to navigate to the next section
             downKey: 40,              // key code to navigate to the previous section
@@ -22,105 +22,128 @@ $(document).ready(function(){
             onPageChange: null,       // function(pageIndex) that is called when page is changed
             topOffset: -75            // offste (in px) for fixed top navigation
         });
-
-
+    
+    
         /* =============================================================================
         --------------------------------  Navbar Menu   --------------------------------
         ============================================================================= */
-
+    
         $('.navbar .dropdown').hover(function () {
             $(this).find('.dropdown-menu').addClass('show');
         }, function () {
             $(this).find('.dropdown-menu').removeClass('show')
         });
-
+    
         $('.navbar .dropdown-item').hover(function () {
             $(this).find('.dropdown-side').addClass('show');
         }, function () {
             $(this).find('.dropdown-side').removeClass('show')
         });
-
+    
         $(".navbar .search-form").on("click", ".search-icon", function () {
-
+    
             $(".navbar .search-form").toggleClass("open");
-
+    
             if ($(".navbar .search-form").hasClass('open')) {
-
+    
                 $(".search-form .close-search").slideDown();
-
+    
             } else {
-
+    
                 $(".search-form .close-search").slideUp();
             }
         });
-
+    
         $(".navbar").on("click", ".navbar-toggler", function () {
-
+    
             $(".navbar .navbar-collapse").toggleClass("show");
         });
-
+    
         wind.on("scroll", function () {
-
+    
             var bodyScroll = wind.scrollTop(),
                 navbar = $(".navbar"),
                 logo = $(".navbar.change .logo> img");
-
+    
             if (bodyScroll > 300) {
-
+    
                 navbar.addClass("nav-scroll");
                 logo.attr('src', 'assets/imgs/logo-dark.png');
-
+    
             } else {
-
+    
                 navbar.removeClass("nav-scroll");
                 logo.attr('src', 'assets/imgs/logo-light.png');
             }
         });
-
+    
         function noScroll() {
             window.scrollTo(0, 0);
         }
-
-        $('.navbar .menu-icon').on('click', function () {
-
-            $('.hamenu').addClass("open");
-
-            $('.hamenu').animate({ left: 0 });
-
-        });
-
-        $('.hamenu .close-menu, .one-scroll .menu-links .main-menu > li').on('click', function () {
-
-            $('.hamenu').removeClass("open").delay(300).animate({ left: "-100%" });
-            $('.hamenu .menu-links .main-menu .dmenu, .hamenu .menu-links .main-menu .sub-dmenu').removeClass("dopen");
-            $('.hamenu .menu-links .main-menu .sub-menu, .hamenu .menu-links .main-menu .sub-menu2').slideUp();
-
-        });
-
+         // Function to handle menu interactions
+         function attachMenuListeners() {
+            // Open menu on clicking the menu icon
+            $('.navbar .menu-icon').on('click', function () {
+                console.log('clicked')
+                $('.hamenu').addClass("open");
+                $('.hamenu').animate({ left: 0 });
+            });
+    
+            // Close menu on clicking the close button or menu items
+            $('.hamenu .close-menu, .one-scroll .menu-links .main-menu > li').on('click', function () {
+                $('.hamenu').removeClass("open").delay(300).animate({ left: "-100%" });
+                $('.hamenu .menu-links .main-menu .dmenu, .hamenu .menu-links .main-menu .sub-dmenu').removeClass("dopen");
+                $('.hamenu .menu-links .main-menu .sub-menu, .hamenu .menu-links .main-menu .sub-menu2').slideUp();
+            });
+        }
+    
+        // Initial attachment of event listeners
+        attachMenuListeners();
+    
+        // // Reattach the listeners when the page changes or a new one is loaded
+        // $(window).on('popstate', function () {
+        //     attachMenuListeners(); // Reapply event listeners
+        // });
+        // $('.navbar .menu-icon').on('click', function () {
+    
+        //     $('.hamenu').addClass("open");
+    
+        //     $('.hamenu').animate({ left: 0 });
+    
+        // });
+    
+        // $('.hamenu .close-menu, .one-scroll .menu-links .main-menu > li').on('click', function () {
+    
+        //     $('.hamenu').removeClass("open").delay(300).animate({ left: "-100%" });
+        //     $('.hamenu .menu-links .main-menu .dmenu, .hamenu .menu-links .main-menu .sub-dmenu').removeClass("dopen");
+        //     $('.hamenu .menu-links .main-menu .sub-menu, .hamenu .menu-links .main-menu .sub-menu2').slideUp();
+    
+        // });
+    
         $('.hamenu .menu-links .main-menu > li').on('mouseenter', function () {
             $(this).removeClass('hoverd').siblings().addClass('hoverd');
         });
-
+    
         $('.hamenu .menu-links .main-menu > li').on('mouseleave', function () {
             $(this).removeClass('hoverd').siblings().removeClass('hoverd');
         });
-
-
+    
+    
         $('.main-menu > li .dmenu').on('click', function () {
             $(this).parent().parent().find(".sub-menu").toggleClass("sub-open").slideToggle();
             $(this).toggleClass("dopen");
         });
-
+    
         $('.sub-menu > ul > li .sub-dmenu').on('click', function () {
             $(this).parent().parent().find(".sub-menu2").toggleClass("sub-open").slideToggle();
             $(this).toggleClass("dopen");
         });
-
+    
         /* =============================================================================
         ------------------------------  Parallax Swiper   ------------------------------
         ============================================================================= */
-
-
+    
+    
         var parallaxSlider;
         var parallaxSliderOptions = {
             speed: 1500,
@@ -129,7 +152,7 @@ $(document).ready(function(){
             },
             parallax: true,
             loop: true,
-
+    
             on: {
                 init: function () {
                     var swiper = this;
@@ -145,20 +168,20 @@ $(document).ready(function(){
                     this.update();
                 }
             },
-
+    
             pagination: {
                 el: '.slider-prlx .swiper-pagination',
                 type: 'fraction',
                 clickable: true
             },
-
+    
             navigation: {
                 nextEl: '.slider-prlx .swiper-button-next',
                 prevEl: '.slider-prlx .swiper-button-prev'
             }
         };
         parallaxSlider = new Swiper('.slider-prlx .parallax-slider', parallaxSliderOptions);
-
+    
         var parallaxShowCase;
         var parallaxShowCaseOptions = {
             speed: 1500,
@@ -168,7 +191,7 @@ $(document).ready(function(){
             parallax: true,
             mousewheel: true,
             loop: true,
-
+    
             on: {
                 init: function () {
                     var swiper = this;
@@ -184,7 +207,7 @@ $(document).ready(function(){
                     this.update();
                 }
             },
-
+    
             pagination: {
                 el: '.full-showcase .parallax-slider .swiper-pagination',
                 clickable: true,
@@ -195,19 +218,19 @@ $(document).ready(function(){
                         '<circle cx="8" cy="8" r="3" fill="#FFF"></circle>' +
                         '</svg></span>';
                 },
-
+    
             },
-
+    
             navigation: {
                 nextEl: '.full-showcase .parallax-slider .swiper-button-next',
                 prevEl: '.full-showcase .parallax-slider .swiper-button-prev'
             }
         };
         parallaxShowCase = new Swiper('.full-showcase .parallax-slider', parallaxShowCaseOptions);
-
-
+    
+    
         /* ===============================  Carousel slider  =============================== */
-
+    
         var galleryText = new Swiper('.carousel-slider .gallery-text .swiper-container', {
             spaceBetween: 30,
             slidesPerView: 1,
@@ -219,7 +242,7 @@ $(document).ready(function(){
             mousewheel: true,
             speed: 1500,
         });
-
+    
         var galleryImg = new Swiper('.carousel-slider .gallery-img .swiper-container', {
             spaceBetween: 80,
             slidesPerView: 2,
@@ -242,12 +265,12 @@ $(document).ready(function(){
                         '<circle cx="8" cy="8" r="3" fill="#FFF"></circle>' +
                         '</svg></span>';
                 },
-
+    
             },
             keyboard: {
                 enabled: true,
             },
-
+    
             breakpoints: {
                 0: {
                     slidesPerView: 1,
@@ -266,17 +289,17 @@ $(document).ready(function(){
                 },
             }
         });
-
+    
         galleryImg.on("slideChangeTransitionStart", function () {
             galleryText.slideTo(galleryImg.activeIndex);
         });
         galleryText.on("transitionStart", function () {
             galleryImg.slideTo(galleryText.activeIndex);
         });
-
-
+    
+    
         /* ===============================  half slider  =============================== */
-
+    
         var halfText = new Swiper('.half-slider .gallery-text .swiper-container', {
             spaceBetween: 100,
             centeredSlides: true,
@@ -309,7 +332,7 @@ $(document).ready(function(){
                 },
             }
         });
-
+    
         var halfImg = new Swiper('.half-slider .gallery-img .swiper-container', {
             spaceBetween: 0,
             centeredSlides: true,
@@ -330,7 +353,7 @@ $(document).ready(function(){
                         '<circle cx="8" cy="8" r="3" fill="#FFF"></circle>' +
                         '</svg></span>';
                 },
-
+    
             },
             keyboard: {
                 enabled: true,
@@ -339,17 +362,17 @@ $(document).ready(function(){
                 swiper: halfText
             },
         });
-
+    
         halfImg.on("slideChangeTransitionStart", function () {
             halfText.slideTo(halfImg.activeIndex);
         });
         halfText.on("transitionStart", function () {
             halfImg.slideTo(halfText.activeIndex);
         });
-
-
+    
+    
         /* ===============================  crev slider  =============================== */
-
+    
         var galleryTextCrev = new Swiper('.crev-slider .gallery-text .swiper-container', {
             spaceBetween: 30,
             slidesPerView: 1,
@@ -364,7 +387,7 @@ $(document).ready(function(){
                 type: "fraction",
             },
         });
-
+    
         var galleryImgCrev = new Swiper('.crev-slider .gallery-img .swiper-container', {
             spaceBetween: 30,
             slidesPerView: 1,
@@ -372,177 +395,177 @@ $(document).ready(function(){
             loop: true,
             speed: 1500,
         });
-
+    
         galleryImgCrev.on("slideChangeTransitionStart", function () {
             galleryTextCrev.slideTo(galleryImgCrev.activeIndex);
         });
         galleryTextCrev.on("transitionStart", function () {
             galleryImgCrev.slideTo(galleryTextCrev.activeIndex);
         });
-
-
+    
+    
         /* =============================================================================
         ------------------------------  Interactive work   -----------------------------
         ============================================================================= */
-
+    
         $('.inter-links-center .links-text li').on('mouseenter', function () {
             var tab_id = $(this).attr('data-tab');
             $('.links-text li').removeClass('current');
             $(this).addClass('current');
-
+    
             $('.links-img .img').removeClass('current');
             $("#" + tab_id).addClass('current');
-
+    
             if ($(this).hasClass('current')) {
                 return false;
             }
         });
-
+    
         $('.inter-links-center .links-text li').on('mouseleave', function () {
             $('.links-text li').removeClass('current');
             $('.links-img .img').removeClass('current');
         });
-
-
+    
+    
         $('.inter-links-center .links-text li').on('mouseenter', function () {
             $(this).removeClass('no-active').siblings().addClass('no-active');
         });
-
+    
         $('.inter-links-center .links-text li').on('mouseleave', function () {
             $('.inter-links-center .links-text li').removeClass('no-active');
         });
-
-
+    
+    
         /* =============================================================================
         ------------------------------  Data Background   ------------------------------
         ============================================================================= */
-
+    
         var pageSection = $(".bg-img, section");
         pageSection.each(function (indx) {
-
+    
             if ($(this).attr("data-background")) {
                 $(this).css("background-image", "url(" + $(this).data("background") + ")");
             }
         });
-
+    
         var pageSectionColor = $(".bg-solid-color, section");
         pageSectionColor.each(function (indx) {
-
+    
             var color = $(this).attr("data-solid-color");
-
+    
             if ($(this).attr("data-solid-color")) {
                 $(this).css("background-color", color);
             }
         });
-
-
+    
+    
         /* =============================================================================
         ------------------------------  Interactive work   -----------------------------
         ============================================================================= */
-
+    
         $('.inter-fixed-text .links-img .img').on('mouseenter', function () {
             var tab_id = $(this).attr('data-tab');
             $('.links-img .img').removeClass('current');
             $(this).addClass('current');
-
+    
             $('.links-text li').removeClass('current');
             $("#" + tab_id).addClass('current');
-
+    
             if ($(this).hasClass('current')) {
                 return false;
             }
         });
-
+    
         $('.inter-fixed-text .links-img .img').on('mouseleave', function () {
             $('.links-text li').removeClass('current');
             $('.links-img .img').removeClass('current');
         });
-
-
+    
+    
         /* =============================================================================
         -----------------------------------  Tabs  -------------------------------------
         ============================================================================= */
-
+    
         $('#tabs .tab-links').on('click', '.item-link', function () {
-
+    
             var tab_id = $(this).attr('data-tab');
-
+    
             $('#tabs .tab-links .item-link').removeClass('current');
             $(this).addClass('current');
-
+    
             $('.tab-content').hide();
             $("#" + tab_id).show();
-
+    
         });
-
+    
         $('#tabs-fade .tab-links').on('click', '.item-link', function () {
-
+    
             var tab2_id = $(this).attr('data-tab');
-
+    
             $('#tabs-fade .tab-links .item-link').removeClass('current');
             $(this).addClass('current');
-
+    
             $('.tab-content').fadeOut();
             $("#" + tab2_id).fadeIn();
-
+    
         });
-
-
+    
+    
         /* ===============================  Work Tabs  =============================== */
-
+    
         $('.portfolio-tab .cluom').on('mouseenter', function () {
             var tab_id = $(this).attr('data-tab');
             $('.portfolio-tab .cluom').removeClass('current');
             $(this).addClass('current');
-
+    
             $('.portfolio-tab .glry-img .tab-img ').removeClass('current');
             $("#" + tab_id).addClass('current');
-
+    
             if ($(this).hasClass('current')) {
                 return false;
             }
         });
-
-
+    
+    
         /* ===============================  Team Tabs  =============================== */
-
+    
         $('.team-tab .cluom').on('mouseenter', function () {
             var tab_id = $(this).attr('data-tab');
             $('.team-tab .cluom').removeClass('current');
             $(this).addClass('current');
-
+    
             $('.team-tab .glry-img .tab-img ').removeClass('current');
             $("#" + tab_id).addClass('current');
-
+    
             if ($(this).hasClass('current')) {
                 return false;
             }
         });
-
-
+    
+    
         /* =============================================================================
         --------------------------------  Accordion  -----------------------------------
         ============================================================================= */
-
+    
         $(".accordion").on("click", ".title", function () {
-
+    
             $(this).next().slideDown();
-
+    
             $(".accordion-info").not($(this).next()).slideUp();
-
+    
         });
-
+    
         $(".accordion").on("click", ".item", function () {
-
+    
             $(this).addClass("active").siblings().removeClass("active");
-
+    
         });
-
-
+    
+    
         /* =============================================================================
         ---------------------------------  Tolltip  ------------------------------------
         ============================================================================= */
-
+    
         $('[data-tooltip-tit]').hover(function () {
             $('<div class="div-tooltip-tit"></div>').text($(this).attr('data-tooltip-tit')).appendTo('body').fadeIn();
         }, function () {
@@ -550,7 +573,7 @@ $(document).ready(function(){
         }).mousemove(function (e) {
             $('.div-tooltip-tit').css({ top: e.pageY + 10, left: e.pageX + 20 })
         });
-
+    
         $('[data-tooltip-sub]').hover(function () {
             $('<div class="div-tooltip-sub"></div>').text($(this).attr('data-tooltip-sub')).appendTo('body').fadeIn();
         }, function () {
@@ -558,12 +581,12 @@ $(document).ready(function(){
         }).mousemove(function (e) {
             $('.div-tooltip-sub').css({ top: e.pageY + (-20), left: e.pageX + 30 })
         });
-
-
+    
+    
         /* =============================================================================
         -------------------------------  Progress Bar  ---------------------------------
         ============================================================================= */
-
+    
         wind.on('scroll', function () {
             $(".skill-progress .progres").each(function () {
                 var bottom_of_object =
@@ -578,15 +601,15 @@ $(document).ready(function(){
                 }
             });
         });
-
-
+    
+    
         /* =============================================================================
         ------------------------------  Parallax Items   -----------------------------
         ============================================================================= */
-
+    
         // Get the target elements
         const parallaxTargets = document.querySelectorAll('.parallax');
-
+    
         // Get the mouse position
         let mouseX = 0;
         let mouseY = 0;
@@ -594,7 +617,7 @@ $(document).ready(function(){
             mouseX = event.clientX;
             mouseY = event.clientY;
         });
-
+    
         // Update the target elements' position on each animation frame
         let rafId = null;
         function updateParallax() {
@@ -602,51 +625,51 @@ $(document).ready(function(){
             parallaxTargets.forEach(target => {
                 // Get the target's speed
                 let speed = target.dataset.speed;
-
+    
                 // Calculate the new position based on the mouse position and speed
                 let x = (window.innerWidth / 2 - mouseX) * speed;
                 let y = (window.innerHeight / 2 - mouseY) * speed;
                 target.style.transform = `translate3d(${x / 10}rem, ${y / 10}rem, 0)`;
             });
-
+    
             // Schedule the next animation frame
             rafId = requestAnimationFrame(updateParallax);
         }
-
+    
         // Start the parallax animation
         updateParallax();
-
-
+    
+    
         /* =============================================================================
         -----------------------------  Trigger Plugins  --------------------------------
         ============================================================================= */
-
-
+    
+    
         /* ========== Sticky ========== */
-
+    
         $(".sticky-item").stick_in_parent();
-
-
+    
+    
         /* ========== YouTubePopUp ========== */
-
+    
         $("a.vid").YouTubePopUp();
-
-
+    
+    
         /* ========== parallaxie ========== */
-
+    
         $('.parallaxie').parallaxie({
             speed: 0.8,
             size: "cover"
         });
-
-
+    
+    
         /* ========== paroller ========== */
-
+    
         $('.my-paroller').paroller();
-
-
+    
+    
         /* ========== magnificPopup ========== */
-
+    
         $('.popup-img , .gallery').magnificPopup({
             delegate: '.popimg',
             type: 'image',
@@ -654,29 +677,29 @@ $(document).ready(function(){
                 enabled: true
             }
         });
-
-
+    
+    
         /* =========== justifiedGallery =========== */
-
+    
         $('.justified-gallery').justifiedGallery({
             rowHeight: 400,
             lastRow: 'nojustify',
             margins: 15
         });
-
-
+    
+    
         /* =========== hover3d =========== */
-
+    
         $(".hover3d").hover3d({
             selector: ".hover3d-child",
             invert: true
         });
-
-
+    
+    
         /* ===========  Splitting  =========== */
-
+    
         Splitting();
-
+    
     });
 })
 
@@ -700,9 +723,12 @@ $(document).ready(function(){
         };
         const editCursor = e => {
             const { clientX: x, clientY: y } = e;
+
+            // console.log(cursor)
             cursor.style.left = x + 'px';
             cursor.style.top = y + 'px';
         };
+
         link.forEach(b => b.addEventListener('mousemove', animateit));
         link.forEach(b => b.addEventListener('mouseleave', animateit));
         window.addEventListener('mousemove', editCursor);
@@ -854,39 +880,42 @@ $(document).ready(function(){
 -----------------------------  Button scroll up   ------------------------------
 ============================================================================= */
 
-$(document).ready(function () {
+$(document).ready(function(){
 
     "use strict";
 
     var progressPath = document.querySelector('.progress-wrap path');
-    var pathLength = progressPath.getTotalLength();
-    progressPath.style.transition = progressPath.style.WebkitTransition = 'none';
-    progressPath.style.strokeDasharray = pathLength + ' ' + pathLength;
-    progressPath.style.strokeDashoffset = pathLength;
-    progressPath.getBoundingClientRect();
-    progressPath.style.transition = progressPath.style.WebkitTransition = 'stroke-dashoffset 10ms linear';
-    var updateProgress = function () {
-        var scroll = $(window).scrollTop();
-        var height = $(document).height() - $(window).height();
-        var progress = pathLength - (scroll * pathLength / height);
-        progressPath.style.strokeDashoffset = progress;
-    }
-    updateProgress();
-    $(window).scroll(updateProgress);
-    var offset = 150;
-    var duration = 550;
-    jQuery(window).on('scroll', function () {
-        if (jQuery(this).scrollTop() > offset) {
-            jQuery('.progress-wrap').addClass('active-progress');
-        } else {
-            jQuery('.progress-wrap').removeClass('active-progress');
+    var pathLength = progressPath ? progressPath.getTotalLength() : 0;
+    console.log(pathLength);
+    // if (pathLength !== 0) {
+        progressPath.style.transition = progressPath.style.WebkitTransition = 'none';
+        progressPath.style.strokeDasharray = pathLength + ' ' + pathLength;
+        progressPath.style.strokeDashoffset = pathLength;
+        progressPath.getBoundingClientRect();
+        progressPath.style.transition = progressPath.style.WebkitTransition = 'stroke-dashoffset 10ms linear';
+        var updateProgress = function () {
+            var scroll = $(window).scrollTop();
+            var height = $(document).height() - $(window).height();
+            var progress = pathLength - (scroll * pathLength / height);
+            progressPath.style.strokeDashoffset = progress;
         }
-    });
-    jQuery('.progress-wrap').on('click', function (event) {
-        event.preventDefault();
-        jQuery('html, body').animate({ scrollTop: 0 }, duration);
-        return false;
-    })
+        updateProgress();
+        $(window).scroll(updateProgress);
+        var offset = 150;
+        var duration = 550;
+        $(window).on('scroll', function () {
+            if ($(this).scrollTop() > offset) {
+                $('.progress-wrap').addClass('active-progress');
+            } else {
+                $('.progress-wrap').removeClass('active-progress');
+            }
+        });
+        $('.progress-wrap').on('click', function (event) {
+            event.preventDefault();
+            $('html, body').animate({ scrollTop: 0 }, duration);
+            return false;
+        })
+    // }
 
 });
 
@@ -895,7 +924,7 @@ $(document).ready(function () {
 --------------------------------  Fade Header   --------------------------------
 ============================================================================= */
 
-$(window).scroll(function () {
+$(document).ready(function(){
 
     var scrolled = $(this).scrollTop();
     $('.fixed-slider .caption').css({
@@ -1267,7 +1296,7 @@ $(document).ready(function(){
         -------------------------------  Preloader svg   -------------------------------
         ============================================================================= */
 
-        const svg = document.getElementById("svg");
+        const svg = $("#svg");
         const tl = gsap.timeline();
         const curve = "M0 502S175 272 500 272s500 230 500 230V0H0Z";
         const flat = "M0 2S175 1 500 1s500 1 500 1V0H0Z";

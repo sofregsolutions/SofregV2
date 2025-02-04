@@ -1,4 +1,4 @@
-import { div, h1 } from "framer-motion/client";
+// import { div, h1 } from "framer-motion/client";
 import React from "react";
 import ImageOverlay from "./popup/ImageOverlay";
 import VideoOverlay from "./popup/VideoOverlay";

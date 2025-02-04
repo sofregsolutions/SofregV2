@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  // console.log(toggleSidebar)
   const menuItems = [
     { name: "Home", link: "/" },
     { name: "Services", link: "/services" },
@@ -22,6 +23,7 @@ const Navbar = () => {
 
         {/* Toggler Button */}
         <button
+          // onClick={toggleSidebar}
           className="navbar-toggler"
           type="button"
           data-toggle="collapse"

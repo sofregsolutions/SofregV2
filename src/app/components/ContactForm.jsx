@@ -135,13 +135,13 @@ const ContactForm = () => {
                                     <i className="fab fa-facebook-f"></i>
                                 </a>
                                 <a href="tel:+639177070531">
-                                    <i className="fa-brands fa-whatsapp"></i>
+                                    <i className="fab fa-whatsapp"></i>
                                 </a>
                                 <a href="https://www.linkedin.com/company/sofreg-solutions/">
                                     <i className="fab fa-linkedin-in"></i>
                                 </a>
                                 <a href="mailto:sofreginfo@gmail.com">
-                                    <i className="fa-regular fa-envelope"></i>
+                                    <i className="fa fa-envelope"></i>
                                 </a>
                             </div>
                         </div>

@@ -27,7 +27,7 @@ const PageIntro = () => {
                   <div className="item-box radius-15 flex-grow-1 d-flex flex-column">
                     <div className="icon mb-3 wide:mb-40 opacity-5">
                       {/* <img src="assets/imgs/serv-icons/3.png" alt="" /> */}
-                      <i class="fa-thin fa-layer-group text-white text-7xl"></i>
+                      <i className="fa fa-layer-group text-white text-7xl"></i>
                     </div>
                     <h5 className="mb-3 wide:mb-15 text-2xl font-bold">Build Seamless Digital Experiences</h5>
                     <p className="wide:text-xl">
@@ -47,7 +47,7 @@ const PageIntro = () => {
                   <div className="item-box radius-15 flex-grow-1 d-flex flex-column">
                     <div className="icon mb-3 wide:mb-40 opacity-5">
                       {/* <img src="assets/imgs/serv-icons/4.png" alt="" /> */}
-                      <i class="fa-thin fa-palette text-white text-7xl"></i>
+                      <i className="fa fa-palette text-white text-7xl"></i>
                     </div>
                     <h5 className="mb-3 wide:mb-15 text-2xl font-bold">Enhance Brand Identity</h5>
                     <p className="wide:text-xl">
@@ -67,7 +67,7 @@ const PageIntro = () => {
                   <div className="item-box radius-15 flex-grow-1 d-flex flex-column">
                     <div className="icon mb-3 wide:mb-40 opacity-5">
                       {/* <img src="assets/imgs/serv-icons/4.png" alt="" /> */}
-                      <i class="fa-thin fa-camera text-white text-7xl"></i>
+                      <i className="fa fa-camera text-white text-7xl"></i>
                     </div>
                     <h5 className="mb-3 wide:mb-15 text-2xl font-bold">Produce Engaging Multimedia Content</h5>
                     <p className="wide:text-xl">
@@ -87,7 +87,7 @@ const PageIntro = () => {
                   <div className="item-box radius-15 flex-grow-1 d-flex flex-column">
                     <div className="icon mb-3 wide:mb-40 opacity-5">
                       {/* <img src="assets/imgs/serv-icons/4.png" alt="" /> */}
-                      <i class="fa-thin fa-rocket text-white text-7xl"></i>
+                      <i className="fa fa-rocket text-white text-7xl"></i>
                     </div>
                     <h5 className="mb-3 wide:mb-15 text-2xl font-bold">Commit to Continuous Improvement</h5>
                     <p className="wide:text-xl">
@@ -132,7 +132,7 @@ const PageIntro = () => {
                   <div className="item-box radius-15 ">
                     <div className="icon mb-2 wide:mb-40 opacity-5">
                       {/* <img src="assets/imgs/serv-icons/3.png" alt="" /> */}
-                      <i class="fa-thin fa-handshake text-white text-7xl"></i>
+                      <i className="fa fa-handshake text-white text-7xl"></i>
                     </div>
                     <h5 className="mb-2 wide:mb-15 text-2xl font-bold">Client-Centric Approach Strategy Plan</h5>
                     <p className="wide:text-xl">
@@ -145,7 +145,7 @@ const PageIntro = () => {
                   <div className="item-box radius-15">
                     <div className="icon mb-2 wide:mb-40 opacity-5">
                       {/* <img src="assets/imgs/serv-icons/4.png" alt="" /> */}
-                      <i class="fa-thin fa-cubes text-white text-7xl"></i>
+                      <i className="fa fa-cubes text-white text-7xl"></i>
                     </div>
                     <h5 className="mb-2 wide:mb-15 text-2xl font-bold">Diverse Service Offering Strategy Plan</h5>
                     <p className="wide:text-xl">
@@ -165,7 +165,7 @@ const PageIntro = () => {
                   <div className="item-box radius-15">
                     <div className="icon mb-2 wide:mb-40 opacity-5">
                       {/* <img src="assets/imgs/serv-icons/4.png" alt="" /> */}
-                      <i class="fa-thin fa-chart-simple text-white text-7xl"></i>
+                      <i className="fas fa-chart-bar text-white text-7xl"></i>
                     </div>
                     <h5 className="mb-2 wide:mb-15 text-2xl font-bold">Quality and Innovation Strategy Plan</h5>
                     <p className="wide:text-xl">
@@ -185,7 +185,7 @@ const PageIntro = () => {
                   <div className="item-box radius-15">
                     <div className="icon mb-2 wide:mb-40 opacity-5">
                       {/* <img src="assets/imgs/serv-icons/4.png" alt="" /> */}
-                      <i class="fa-thin fa-chart-network text-white text-7xl"></i>
+                      <i className="fas fa-project-diagram text-white text-7xl"></i>
                     </div>
                     <h5 className="mb-2 wide:mb-15 text-2xl font-bold">Strategic Partnerships Strategy Plan</h5>
                     <p className="wide:text-xl">

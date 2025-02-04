@@ -4,7 +4,8 @@ const PriceHeader = () => {
   return (
     <header
       className="page-header-cerv bg-img section-padding"
-      data-background="assets/imgs/header/2.jpg"
+      // data-background="assets/imgs/header/2.jpg"
+      style={{ backgroundImage: 'url(assets/imgs/header/2.jpg)' }}
       data-overlay-dark="4"
     >
       <div className="container pt-100 ontop">

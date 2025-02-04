@@ -27,7 +27,7 @@ const PageIntroModern = ({onOpenForm}) => {
                     data-lag="0">
 
                     <button type="button" className="" onClick={onOpenForm}>
-                        <a className="border p-2 text-xl wide:text-4xl">Design a Quote <i class="fa-solid fa-arrow-up-right"></i></a>
+                        <a className="border p-2 text-xl wide:text-4xl">Design a Quote <i className="fa-solid fa-arrow-up-right"></i></a>
                         
                     </button>
                   </div>
@@ -63,7 +63,7 @@ const PageIntroModern = ({onOpenForm}) => {
                 easily reach us by clicking{" "}
                 <span className="underline">
                   <a href="#0" className="main-color">
-                    here <i class="fa-solid fa-arrow-up-right"></i>
+                    here <i className="fa-solid fa-arrow-up-right"></i>
                   </a>
                 </span>
               </h4>
