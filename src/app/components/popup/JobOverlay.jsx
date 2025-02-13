@@ -47,7 +47,7 @@ const JobOverlay = ({ details, onClose }) => {
 
         // Check if required fields are present
         if (
-            !formData.portfolioPdf && !formData.portfolioUrl||
+            !formData.portfolioPdf && !formData.portfolioUrl ||
             !formData.resumePdf ||
             !formData.name ||
             !formData.email ||
@@ -185,7 +185,8 @@ const JobOverlay = ({ details, onClose }) => {
                                     {details.address}
                                 </span>
                                 <span className="text-xs text-gray-500">• {formatDistanceToNow(new Date(details.date), { addSuffix: true })}</span>
-                                <span className="text-sm border w-fit px-1 mt-2 rounded-sm">Full-Time</span>
+                                <span className=""> <span className="text-sm border w-fit px-1 mt-2 rounded-sm me-2">Full-Time</span>
+                                    <span className="text-sm border w-fit px-1 mt-2 rounded-sm">Work From Home</span></span>
                             </span>
 
 
@@ -197,16 +198,29 @@ const JobOverlay = ({ details, onClose }) => {
                             <span className="flex-1 text-xl font-bold text-color-primary-blue"><i className="fas fa-check-circle text-color-primary-blue text-xl"></i> Key Responsibilities: </span>
                             <span className="flex flex-col gap-2 phone:text-xl">
                                 {details.responsibilities.map((item, index) => (
-                                    <span key={index}><span className=""><i className="fa-solid fa-circle text-xs text-color-primary-blue"></i></span> {item}</span>
+                                    <span key={index}><span>✔</span> {item}</span>
                                 ))}
+                            </span>
+                            <span className={`flex-1 text-xl font-bold text-color-primary-blue ${details.requirements?.length > 0 ? 'block' : 'hidden'}`}><i className="fas fa-check-circle text-color-primary-blue text-xl"></i> Requirements: </span>
+                            <span className="flex flex-col gap-2 phone:text-xl">
+                                {details.requirements?.length > 0 &&
+                                    details.requirements.map((item, index) => (
+                                        <span key={index}>
+                                            <span>✔</span> {item}
+                                        </span>
+                                    ))}
                             </span>
 
                             <span className="phone:text-xl"> Join our team and be a part of a forward-thinking company that values innovation and creativity!</span>
                             <span className="phone:text-xl">  Interested candidates should send their resume and portfolio by clicking the button below. </span>
                             <span className="phone:text-xl">  Applications will be reviewed on a rolling basis until the positions are filled. </span>
-                            <a href="mailto:sofreginfo@gmail.com" className="hover:text-color-primary-blue cursor-pointer border w-fit p-2 rounded-sm">sofreginfo@gmail.com</a>
+                            {details.requirements?.length > 0 && (
+                            <a href="https://forms.gle/hCr6UsrC7c154sWc7" target="_blank" rel="noopener noreferrer" className="hover:bg-color-gray cursor-pointer bg-color-primary-blue w-fit p-2 rounded-sm">
+                                Apply Now
+                            </a>
 
-                            <span className="bg-[#181616] p-2 rounded-sm">
+                            )}
+                            {/* <span className="bg-[#181616] p-2 rounded-sm">
                                 <form onSubmit={handleSubmit} className="flex flex-col gap-2">
                                     <span className="phone:text-xl font-bold text-color-primary-blue">Apply as {details.title}</span>
                                     <span className="flex flex-col">
@@ -304,9 +318,7 @@ const JobOverlay = ({ details, onClose }) => {
                                         {loading ? 'Sending...' : 'Send Email'}
                                     </button>
                                 </form>
-
-                                {/* {responseMessage && <p>{responseMessage}</p>} */}
-                            </span>
+                            </span> */}
                         </span>
                     </div>
                 </span>

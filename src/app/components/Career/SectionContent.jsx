@@ -92,22 +92,22 @@ const SectionContent = ({openModal}) => {
 
                 <div className="gallery row stand-marg" ref={galleryRef}>
                     {jobListings.map((job, index) => (
-                        <div key={index} className={`col-lg-4 col-md-6 transition-transform transform scale-100 hover:scale-110 duration-300 items ${job.code}`}>
+                        <div key={index} className={`col-lg-6 col-md-6 transition-transform transform scale-100 hover:scale-110 duration-300 items ${job.code}`}>
                             {/* <img src="/assets/PNG/LOGO_WHITE.png" className="absolute -top-5 left-1/2 transform -translate-x-1/2 w-12 p-2 rounded-md bg-color-primary-blue" alt="logo" /> */}
                             <div className="item mb-40 bg-[#181616] rounded-sm h-[220px]">
-                                <div className="h-full ps-3 flex items-center"> {/* Changed to justify-start */}
-                                    <a className="img flex items-center gap-4 cursor-pointer w-full"> {/* Added w-full for flex container */}
+                                <div className="h-full flex items-center"> {/* Changed to justify-start */}
+                                    <a className="img ps-3 mobile:ps-0 flex items-center justify-center gap-4 cursor-pointer w-full"> {/* Added w-full for flex container */}
                                         {/* Icon with flex-shrink-0 to avoid shrinking */}
-                                        <img src="/assets/PNG/LOGO_WHITE.png" className="w-14 p-2 rounded-md bg-color-primary-blue" alt="logo" />
+                                        <img src="/assets/PNG/LOGO_WHITE.png" className="w-14 mobile:w-20 p-2 rounded-md bg-color-primary-blue" alt="logo" />
 
                                         {/* Text container that can wrap and grow */}
-                                        <div className="flex-grow max-w-full">
+                                        <div className="w-fit">
                                             <span className="text-2xl font-bold block">{job.title}</span> {/* block for text to properly wrap */}
                                             <span className="text-sm">{job.address}</span>
-                                            <span className="text-xs text-gray-500">• {formatDistanceToNow(new Date(job.date), { addSuffix: true })}</span>
-                                            <div className="flex gap-2 text-sm mt-2">
+                                            <span className="block text-xs text-gray-500">• {formatDistanceToNow(new Date(job.date), { addSuffix: true })}</span>
+                                            <div className="flex items-center gap-2 text-sm mt-2">
                                                 <span className={`px-1 rounded-sm ${job.status != 'open' ? 'text-red-500' : 'text-green-600'}`}>{job.status}</span>
-                                                <span className="border px-1 rounded-sm">Full-Time</span>
+                                                <span className="px-1 rounded-sm text-xs">Full-Time (WFH)</span>
                                                 <span  
                                                     onClick={() => openModal(job)}
                                                     className="flex-1 px-1 rounded-sm text-color-primary-blue">more <span className="icon ti-arrow-top-right text-sm"></span></span>
