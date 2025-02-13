@@ -43,7 +43,7 @@ const Services = () => {
     const handleFormClose = () => setIsFormOpen(false);
 
     return (
-        <div className="smooth-wrapper">
+        <div className="smooth-wrapper overflow-hidden">
 
             {/* Loader */}
             <Loader />

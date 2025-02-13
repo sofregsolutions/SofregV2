@@ -23,7 +23,7 @@ const Pricing = () => {
       };
 
     return (
-        <div className="startup-one">
+        <div className="startup-one overflow-hidden">
             {/* Loader */}
             <Loader />
 

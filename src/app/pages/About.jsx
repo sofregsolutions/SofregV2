@@ -19,7 +19,7 @@ const About = () => {
     const handleFormClose = () => setIsFormOpen(false);
 
     return (
-        <div className="">
+        <div className="overflow-hidden">
             {/* Loader */}
             <Loader />
 

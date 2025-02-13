@@ -11,7 +11,7 @@ import FooterDetailed from "../components/FooterDetailed";
 
 const Contact = () => {
     return (
-        <div className="smooth-wrapper">
+        <div className="smooth-wrapper overflow-hidden">
             {/* Loader */}
             <Loader />
 
