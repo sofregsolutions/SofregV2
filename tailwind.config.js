@@ -19,6 +19,7 @@ export default {
       },
       colors: {
         'color-gray':'#7A7A7A',
+        'color-gray-2': '#5E5E5E', // A slightly darker gray
         'color-dark': '#1E1D1D',
         'color-sky': '#87CEEB',
         'color-magenta': '#f075f0',
