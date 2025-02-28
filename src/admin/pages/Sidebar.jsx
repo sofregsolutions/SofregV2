@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation, Link } from "react-router-dom";
-const Sidebar = () => {
+const Sidebar = ({onSectionClick}) => {
     const location = useLocation();  // Get the current location (path)
     const currentPath = location.pathname;  // Get the current route path
   
@@ -13,9 +13,9 @@ const Sidebar = () => {
     };
   
     const navItems = [
-      { id: "home", label: "Home", icon: "fas fa-home", url: "#" },
-      { id: "account", label: "Account", icon: "fas fa-user", url: "#" },
-      // { id: "announcement", label: "Announcement", icon: "fa-megaphone", url: "#" },
+      { id: "dashboard", section:"dashboard", label: "Dashboard", icon: "fas fa-home", url: "#" },
+      { id: "account", section:"account", label: "Employee", icon: "fas fa-user", url: "#" },
+      { id: "attendance", section:"attendance", label: "Attendance", icon: "fas fa-clock", url: "#" },
     ];
   
     return (
@@ -35,6 +35,9 @@ const Sidebar = () => {
           {/* Render Navigation Items */}
           {navItems.map((item) => (
             <Link
+              onClick={() => {
+                console.log("Clicked", item.section);
+                onSectionClick(item.section)}}
               to={item.url}
               key={item.id}
               className={`flex items-center gap-2 space-x-3 tablet:space-x-0 tablet:block cursor-pointer hover:text-white ${
