@@ -7,6 +7,7 @@ import axios from "axios";
 import AttendanceTable from "../components/AttendanceTable";
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import AttendanceTodayTable from "../components/AttendanceTodayTable";
 
 const AdminDashboard = () => {
     const [activeSection, setActiveSection] = useState("dashboard");
@@ -15,13 +16,31 @@ const AdminDashboard = () => {
     const closeAccountModal = () => setEmployeeAccountModal(false);
     const [employeeData, setEmployeeData] = useState([]);
     const [attendanceData, setAttendanceData] = useState([]);
-
+    const [attendanceDataToday, setAttendanceDataToday] = useState([]);
+    const [summaryReport, setSummaryReport] = useState({})
     const fetchEmployeeApi = "http://localhost:8001/api/admin/employee-account"
     const fetchAttendanceApi = "http://localhost:8001/api/admin/employee-attendance"
     const fetchExportAttendanceApi = "http://localhost:8001/api/admin/export-attendance"
+    const fetchSummaryApi = "http://localhost:8001/api/admin/summary"
     const data = JSON.parse(localStorage.getItem("authentication")) || {};
     useEffect(() => {
         if (!activeSection) return; // Only run when activeSection is set
+
+        const fetchSumaryData = async () => {
+            try {
+                console.log('Fetching initial summary data...');
+                const response = await axios.get(fetchSummaryApi, {
+                    headers: {
+                        'Authorization': `Bearer ${data.token}`
+                    }
+                });
+                console.log('Initial summary data:', response.data);
+                // setEmployeeData(response.data);
+                setSummaryReport(response.data)
+            } catch (error) {
+                console.error(`Failed to fetch ${activeSection.toLowerCase()} data:`, error.response?.data || error.message);
+            }
+        };
 
         const fetchInitialData = async () => {
             try {
@@ -34,7 +53,7 @@ const AdminDashboard = () => {
                     });
                     console.log('Initial employee data:', response.data);
                     setEmployeeData(response.data);
-                } else if (activeSection === 'attendance') {
+                } else if (activeSection === 'attendance' || activeSection === 'dashboard') {
                     console.log('Fetching initial admin attendance data...');
                     const response = await axios.get(fetchAttendanceApi, {
                         headers: {
@@ -43,6 +62,7 @@ const AdminDashboard = () => {
                     });
                     console.log('Initial attendance data:', response.data);
                     setAttendanceData(response.data);
+                    setAttendanceDataToday(response.data);
                 }
             } catch (error) {
                 console.error(`Failed to fetch ${activeSection.toLowerCase()} data:`, error.response?.data || error.message);
@@ -50,7 +70,7 @@ const AdminDashboard = () => {
         };
 
         fetchInitialData();
-
+        fetchSumaryData()
         // Enable pusher logging - remove this in production
         Pusher.logToConsole = true;
 
@@ -78,7 +98,7 @@ const AdminDashboard = () => {
                     console.error('Failed to fetch updated employee data:', error);
                 }
             });
-        } else if (activeSection === 'attendance') {
+        } else if (activeSection === 'attendance' || activeSection === 'dashboard') {
             channel = pusher.subscribe('admin-attendance-channel');
             channel.bind('admin-attendance-event', async (event) => {
                 console.log('Admin Attendance event received:', event);
@@ -91,6 +111,7 @@ const AdminDashboard = () => {
                     });
                     console.log('Updated Admin attendance data:', response.data);
                     setAttendanceData(response.data);
+                    setAttendanceDataToday(response.data);
                 } catch (error) {
                     console.error('Failed to fetch updated admin attendance data:', error);
                 }
@@ -140,7 +161,7 @@ const AdminDashboard = () => {
             const response = await axios.get(fetchExportAttendanceApi, {
                 headers: { 'Authorization': `Bearer ${data.token}` }
             });
-    
+
             console.log('Exported attendance data:', response.data);
             const attendanceData = response.data.employee_attendance.map(item => ({
                 EmployeeID: item.employee_id,
@@ -152,16 +173,16 @@ const AdminDashboard = () => {
                 ClockOut: item.clock_out,
                 Status: item.status,
             }));
-    
+
             const worksheet = XLSX.utils.json_to_sheet(attendanceData);
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, 'Attendance');
-    
+
             const today = new Date();
             const month = today.toLocaleString('default', { month: 'long' });
             const day = today.getDate();
             const year = today.getFullYear();
-    
+
             const fileName = `EmployeeAttendance_${month}_${day}_${year}.xlsx`;
             const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
             const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
@@ -170,25 +191,27 @@ const AdminDashboard = () => {
             console.error('Failed to fetch and export attendance:', error);
         }
     };
-    
+
     // console.log("Active Section", activeSection);
     const renderContent = () => {
         console.log("Rendering content for:", activeSection);
         switch (activeSection) {
             case "account":
                 return (
-                    <div>
-                        <div className="flex items-center justify-between">
+                    <div className="">
+                        <div className="flex flex-col tablet:flex-row tablet:items-center justify-between">
                             <div>
-                                <h1 className="text-2xl font-bold">Employee Account Management</h1>
+                                <h1 className="text-xl tablet:text-2xl font-bold">Employee Account Management</h1>
                                 <p>Manage your employees account here.</p>
 
                             </div>
                             <div>
-                                <button onClick={openAccountModal} type="button" className="border p-2">Add Employee</button>
+                                <button onClick={openAccountModal} type="button" className="border p-1">Add Employee</button>
                             </div>
                         </div>
-                        <AccountTable accountData={employeeData} onPageChange={handlePageChangeEmployeeAccount} />
+                        <div className="overflow-x-auto">
+                            <AccountTable accountData={employeeData} onPageChange={handlePageChangeEmployeeAccount} />
+                        </div>
                     </div>
                 );
             case "attendance":
@@ -206,26 +229,31 @@ const AdminDashboard = () => {
                 );
             default:
                 return (
-                    <div>
-                        <h1 className="text-2xl font-bold">Employee Management Dashboard</h1>
+                    <div className="max-h-[90vh] overflow-y-scroll">
+                        <h1 className="text-xl tablet:text-2xl font-bold">Employee Management Dashboard</h1>
                         <p>This is where your content goes!</p>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 mt-2">
-                            <div className="flex flex-col items-center justify-center p-4 rounded-md bg-gray-800">
-                                <h1 className="font-bold text-4xl">4</h1>
-                                <span>Total Employee</span>
+                            <div className="flex flex-col items-center justify-center p-2 tablet:p-4 rounded-md bg-gray-800">
+                                <h1 className="font-bold text-4xl">{summaryReport.total_employees}</h1>
+                                <span className="text-xs tablet:text-base">Total Employee</span>
                             </div>
-                            <div className="flex flex-col items-center justify-center p-4 rounded-md bg-gray-800">
-                                <h1 className="font-bold text-4xl">4</h1>
-                                <span>Absent Employee</span>
+                            <div className="flex flex-col items-center justify-center p-2 tablet:p-4 rounded-md bg-gray-800">
+                                <h1 className="font-bold text-4xl">{summaryReport.absent_employees}</h1>
+                                <span className="text-xs tablet:text-base">Absent Employee</span>
                             </div>
-                            <div className="flex flex-col items-center justify-center p-4 rounded-md bg-gray-800">
-                                <h1 className="font-bold text-4xl">4</h1>
-                                <span>Most Late Employee</span>
+                            <div className="flex flex-col items-center justify-center p-2 tablet:p-4 rounded-md bg-gray-800">
+                                <h1 className="font-bold text-xl text-red-500">{summaryReport.most_late_employee}</h1>
+                                <span className="text-xs tablet:text-base">Most Late Employee</span>
                             </div>
-                            <div className="flex flex-col items-center justify-center p-4 rounded-md bg-gray-800">
-                                <h1 className="font-bold text-4xl">4</h1>
-                                <span>No Absent Record</span>
+                            <div className="flex flex-col items-center justify-center p-2 tablet:p-4 rounded-md bg-gray-800">
+                                <h1 className="font-bold text-4xl">{summaryReport.no_absent_record}</h1>
+                                <span className="text-xs tablet:text-base">No Absent Record</span>
                             </div>
+                        </div>
+                        <div className="mt-2 bg-gray-800 p-4 rounded-md h-screen">
+                            <h1>Today Attendance History</h1>
+                            {/* for today only */}
+                            <AttendanceTodayTable attendanceData={attendanceDataToday} onPageChange={handlePageChangeEmployeeAttendance} />
                         </div>
                     </div>
                 );
@@ -235,8 +263,8 @@ const AdminDashboard = () => {
     return (
         <div className="flex">
             <Sidebar onSectionClick={setActiveSection} />
-            <div className="flex-grow p-2 h-[97vh]">
-                <div key={activeSection} className="flex-1 bg-color-gray p-4 h-screen">
+            <div className="flex-grow p-2 max-h-[90vh] w-full">
+                <div key={activeSection} className="flex-1 bg-color-gray p-2 p-3 tablet:p-4 max-w-full h-[97vh]">
                     {renderContent()}
                 </div>
             </div>

@@ -1,7 +1,52 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 // import Logo from "../../assets/imgs/logo-light.png"
 const EmployeeSidebar = () => {
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
+    const logout_url = "http://127.0.0.1:8001/api/logout";
+
+    // confirmation function
+    const toggleConfirmationPopup = () => {
+        setShowLogoutModal(true);
+    }
+    const toggleConfirmationPopupClose = () => {
+        setShowLogoutModal(false);
+    }
+
+    const logout = async () => {
+        const data = JSON.parse(localStorage.getItem("authentication")) || {};
+        console.log(data.token); // Check if this logs
+    
+        if (!data.token) {
+          console.log("No token found!");
+          return;
+        }
+    
+        try {
+          const response = await axios.post(
+            logout_url,
+            {},
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                Authorization: `Bearer ${data.token}`,
+              },
+            }
+          );
+    
+          console.log("API response:", response.data);
+    
+          if (response.status === 200) {
+            localStorage.removeItem("authentication"); // Clear frontend token
+            window.location.reload(true); // Redirect to login page
+          }
+        } catch (error) {
+          console.error("Error logging out:", error.response ? error.response.data : error.message);
+        }
+      };
+    
 
     useEffect(() => {
         // Attach menu listeners after component mounts or re-renders
@@ -37,6 +82,7 @@ const EmployeeSidebar = () => {
         ["Dashboard", "/employee"],
         // ["Clocking", "#"],
         ["Attendance Record", "#"],
+        ["Logout", "#"],
     ];
 
     return (
@@ -62,12 +108,33 @@ const EmployeeSidebar = () => {
                                 {menuItems.map((item, index) => (
                                     <li key={index} data-scroll-nav={index}>
                                         <div className="o-hidden">
-                                            <Link to={item[1]} className="link cursor-pointer dmenu"
+                                            {/* <Link to={item[1]} className="link cursor-pointer dmenu"
+                                                onClick={item[0] === 'Logout' ? () => toggleConfirmationPopup : undefined}
                                             >
                                                 <span className="fill-text text-xl" data-text={item[0]}>
                                                     {item[0]}
                                                 </span>
-                                            </Link>
+                                            </Link> */}
+                                            {item[0] === 'Logout' ? (
+                                                <button
+                                                type="button"
+                                                    className="link cursor-pointer dmenu text-start"
+                                                    onClick={toggleConfirmationPopup}
+                                                >
+                                                    <span className="fill-text text-xl" data-text={item[0]}>
+                                                        {item[0]}
+                                                    </span>
+                                                </button>
+                                            ) : (
+                                                <Link
+                                                    to={item[1]}
+                                                    className="link cursor-pointer dmenu"
+                                                >
+                                                    <span className="fill-text text-xl" data-text={item[0]}>
+                                                        {item[0]}
+                                                    </span>
+                                                </Link>
+                                            )}
                                         </div>
                                     </li>
                                 ))}
@@ -112,6 +179,33 @@ const EmployeeSidebar = () => {
                     </div> */}
                 </div>
             </div>
+            {/* confirmation popup */}
+            {showLogoutModal && (
+
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 h-screen">
+                    <div className="bg-white p-6 rounded-lg shadow-lg">
+                        <h2 className="text-lg font-bold mb-4 text-color-dark">Confirm Logout</h2>
+                        <p className="text-color-gray">Are you sure you want to log out?</p>
+                        {/* <div className="border p-2">
+      <span className="text-color-dark">Reminder: </span>
+    </div> */}
+                        <div className="flex justify-center mt-4">
+                            <button
+                                onClick={toggleConfirmationPopupClose}
+                                className="bg-gray-500 text-white px-4 py-2 rounded-lg mr-2"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={logout}
+                                className="bg-red-500 text-white px-4 py-2 rounded-lg"
+                            >
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div >
     );
 };

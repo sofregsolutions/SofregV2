@@ -27,26 +27,24 @@ const Sidebar = ({onSectionClick}) => {
         </div>
   
         {/* Menu Items */}
-        <nav className="space-y-4 w-full h-screen p-2 relative">
+        <nav className="space-y-4 w-full h-screen relative">
           <div className="w-full border-b-2 border-slate-700 mb-4">
             <span className="text-slate-500 hidden tablet:inline-block">Menu</span>
           </div>
   
           {/* Render Navigation Items */}
           {navItems.map((item) => (
-            <Link
+            <div
               onClick={() => {
                 console.log("Clicked", item.section);
                 onSectionClick(item.section)}}
-              to={item.url}
+              // to={item.url}
               key={item.id}
-              className={`flex items-center gap-2 space-x-3 tablet:space-x-0 tablet:block cursor-pointer hover:text-white ${
-                currentPath === item.url ? "text-white" : "text-gray-400"
-              }`}
+              className={`flex items-center gap-2 space-x-3 cursor-pointer hover:text-white`}
             >
               <i className={`${item.icon} text-2xl tablet:text-xl`}></i>
               <span className="ps-2 text-xl hidden tablet:inline-block">{item.label}</span>
-            </Link>
+            </div>
           ))}
   
           {/* Logout Button */}

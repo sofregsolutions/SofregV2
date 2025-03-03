@@ -4,15 +4,15 @@ import AttendanceModal from "./AttendanceModal";
 import ImageViewModal from "./ImageViewModal";
 
 
-const AttendanceTable = ({ attendanceData, onPageChange }) => {
+const AttendanceTodayTable = ({ attendanceData, onPageChange }) => {
     const attendanceViewApi = "http://localhost:8001/api/admin/view-attendance"
     const imageUrl = "http://127.0.0.1:8001/api/storage"
     const token = JSON.parse(localStorage.getItem("authentication")) || {};
 
-    const data = attendanceData?.employee_attendance?.data || [];
+    const data = attendanceData?.employee_attendance_today?.data || [];
     // console.log(data)
-    const currentPage = attendanceData?.employee_attendance?.current_page;
-    const lastPage = attendanceData?.employee_attendance?.last_page;
+    const currentPage = attendanceData?.employee_attendance_today?.current_page;
+    const lastPage = attendanceData?.employee_attendance_today?.last_page;
     const [viewAttendance, setViewAttendance] = useState(false)
     const [viewImage, setViewImage] = useState(false)
     const [employeeData, setEmployeeData] = useState({})
@@ -27,28 +27,8 @@ const AttendanceTable = ({ attendanceData, onPageChange }) => {
         return `${formattedHour}:${minute} ${suffix}`;
     };
 
-    const closeAttendanceModal = () => setViewAttendance(false);
     const closeImageModal = () => setViewImage(false);
-    // viewing attendance
-    const triggerAttendanceModal = async (emp_id) => {
-        // alert(emp_id)
-       
-
-        try {
-            const response = await axios.get(attendanceViewApi, {
-                params: { employee_id: emp_id }, // Query params go here
-                headers: {
-                    'Authorization': `Bearer ${token.token}`
-                }
-            });
-            console.log('Employee data:', response.data);
-            setEmployeeData(response.data);
-            setViewAttendance(true)
-        } catch (error) {
-            console.error('Failed to fetch employee data:', error);
-        }
-
-    }
+    
 
     const triggerImageModal = (image) => {
         setImageDomain(`${imageUrl}/${image}`)
@@ -60,14 +40,13 @@ const AttendanceTable = ({ attendanceData, onPageChange }) => {
             <table className="min-w-full">
                 <thead>
                     <tr>
-                        <th className="px-6 py-3 text-left text-sm font-bold text-color-dark uppercase">Employee ID</th>
-                        <th className="px-6 py-3 text-left text-sm font-bold text-color-dark uppercase">Name</th>
-                        <th className="px-6 py-3 text-left text-sm font-bold text-color-dark uppercase">Date</th>
-                        <th className="px-6 py-3 text-left text-sm font-bold text-color-dark uppercase">Clock In</th>
-                        <th className="px-6 py-3 text-left text-sm font-bold text-color-dark uppercase">Clock Out</th>
-                        <th className="px-6 py-3 text-left text-sm font-bold text-color-dark uppercase">Status</th>
-                        <th className="px-6 py-3 text-left text-sm font-bold text-color-dark uppercase">Captured Image</th>
-                        <th className="px-6 py-3 text-left text-sm font-bold text-color-dark uppercase">Attendance</th>
+                        <th className="px-6 py-3 text-left text-sm font-bold text-white uppercase">Employee ID</th>
+                        <th className="px-6 py-3 text-left text-sm font-bold text-white uppercase">Name</th>
+                        <th className="px-6 py-3 text-left text-sm font-bold text-white uppercase">Date</th>
+                        <th className="px-6 py-3 text-left text-sm font-bold text-white uppercase">Clock In</th>
+                        <th className="px-6 py-3 text-left text-sm font-bold text-white uppercase">Clock Out</th>
+                        <th className="px-6 py-3 text-left text-sm font-bold text-white uppercase">Status</th>
+                        <th className="px-6 py-3 text-left text-sm font-bold text-white uppercase">Captured Image</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -93,7 +72,7 @@ const AttendanceTable = ({ attendanceData, onPageChange }) => {
                                         <span className="text-gray-400">No Image</span>
                                     )}
                                 </td>
-                                <td onClick={()=>triggerAttendanceModal(record.employee_id)} className="p-2 whitespace-nowrap cursor-pointer hover:text-color-dark">{record.current_month_count || 0}</td>
+                                {/* <td onClick={()=>triggerAttendanceModal(record.employee_id)} className="p-2 whitespace-nowrap cursor-pointer hover:text-color-dark">{record.current_month_count || 0}</td> */}
                             </tr>
                         ))
                     ) : (
@@ -142,4 +121,4 @@ const AttendanceTable = ({ attendanceData, onPageChange }) => {
     )
 }
 
-export default AttendanceTable;
+export default AttendanceTodayTable;

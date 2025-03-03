@@ -29,7 +29,7 @@ const Camera = ({ onCapture, alreadyClockin }) => {
 
     const startCountdown = async (type) => {
         // alert(type)
-        setCountdown(2);
+        setCountdown(6);
         setCameraActive(true);
 
         const countdownInterval = setInterval(() => {

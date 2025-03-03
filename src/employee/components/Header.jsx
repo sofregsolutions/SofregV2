@@ -104,15 +104,23 @@ const EmployeeHeader = () => {
         const now = new Date();
         const time = now.toTimeString().split(' ')[0]; // Formats as HH:MM:SS
         const date = now.toISOString().split('T')[0]; // Formats as YYYY-MM-DD
+        const timeOfDutyStart = data.user.time_of_duty_start
 
+        console.log(timeOfDutyStart)
         if (type === 'Clock-In') {
             setCapturedImage(imageData);
             setTimeIn(time);
             setDateToday(date);
 
-            const morningShiftEnd = new Date();
-            morningShiftEnd.setHours(9, 0, 0);
-            const currentStatus = now <= morningShiftEnd ? 'On Time' : 'Late';
+            // const morningShiftEnd = new Date();
+            // morningShiftEnd.setHours(9, 0, 0);
+            // const currentStatus = now <= morningShiftEnd ? 'On Time' : 'Late';
+            // Convert times to Date objects for comparison
+            const dutyStart = new Date(`${date}T${timeOfDutyStart}`);
+            const currentTime = new Date(`${date}T${time}`);
+
+            const currentStatus = currentTime <= dutyStart ? 'On Time' : 'Late';
+
             setStatus(currentStatus);
         } else if (type === 'Clock-Out') {
             setTimeOut(time);

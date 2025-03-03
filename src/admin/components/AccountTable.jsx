@@ -1,10 +1,87 @@
-import React from "react";
-
+import React, {useState} from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
+import EditAccountModal from "./EditAccountModal";
 const AccountTable = ({ accountData, onPageChange }) => {
     console.log(accountData)
     const data = accountData?.users?.data || [];
     const currentPage = accountData?.users?.current_page;
     const lastPage = accountData?.users?.last_page;
+
+    const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState({});
+    const [employee, setEmployeeData] = useState({})
+    const [editModal, setEditModal] = useState(false)
+    const closeEditAccountModal = () => setEditModal(false);
+
+    const editEmployeeUrlAPi = 'http://localhost:8001/api/admin/edit-employee'
+    const deleteEmployeeApi = "http://localhost:8001/api/admin/delete-employee";
+
+    const editEmployee = async (emp_id) => {
+        // alert(emp_id)
+        try {
+            const data = JSON.parse(localStorage.getItem("authentication")) || {};
+            const response = await axios.post(editEmployeeUrlAPi, {employeeId: emp_id}, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${data.token}`,
+                },
+            });
+            console.log("Employee data:", response.data);
+            setEmployeeData(response.data)
+            setEditModal(true)
+            // onClose();
+        } catch (error) {
+            console.error("Error adding employee:", error);
+            if (error.response && error.response.data.errors) {
+                setErrors(error.response.data.errors);
+            }
+        } finally {
+            // setLoading(false);
+           
+        }
+
+        // console.log(employee)
+    }
+
+    const handleDelete = async (emp_id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#1E1D1D",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const authData = JSON.parse(localStorage.getItem("authentication")) || {};
+                    await axios.post(deleteEmployeeApi,{'employee_id':emp_id}, {
+                        headers: {
+                            Authorization: `Bearer ${authData.token}`,
+                        },
+                    });
+                    Swal.fire(
+                        "Deleted!",
+                        "Employee account has been deleted.",
+                        "success"
+                    ).then(() => {
+                        // window.location.reload();
+                        console.log('success!')
+                    });
+                } catch (error) {
+                    console.error("Error deleting employee:", error);
+                    Swal.fire(
+                        "Error!",
+                        "Failed to delete employee account.",
+                        "error"
+                    );
+                }
+            }
+        });
+    };
+
     return (
         <div className="relative flex flex-col w-full">
             <div className="flex-grow overflow-x-scroll overflow-y-hidden w-full bg-gray">
@@ -31,8 +108,8 @@ const AccountTable = ({ accountData, onPageChange }) => {
                                     <td className="p-2 whitespace-nowrap">{record.department}</td>
                                     <td className="p-2 whitespace-nowrap">{record.position}</td>
                                     <td className="flex gap-2 items-center justify-center p-2 whitespace-nowrap">
-                                        <button type="button" className="text-xs bg-color-dark rounded-sm p-1">Edit</button>
-                                        <button type="button" className="text-xs bg-red-500 rounded-sm p-1">Delete</button>
+                                        <button onClick={()=>editEmployee(record.employee_id)} type="button" className="text-xs bg-color-dark rounded-sm p-1">Edit</button>
+                                        <button onClick={()=>handleDelete(record.employee_id)} type="button" className="text-xs bg-red-500 rounded-sm p-1">Delete</button>
                                     </td>
                                 </tr>
                             ))
@@ -67,6 +144,11 @@ const AccountTable = ({ accountData, onPageChange }) => {
                         </button>
                     </div>
                 </div>
+            )}
+
+            {/* edit modal */}
+            {editModal && (
+                <EditAccountModal data={employee} onClose={closeEditAccountModal}/>
             )}
         </div>
     )
