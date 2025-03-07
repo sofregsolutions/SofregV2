@@ -6,7 +6,7 @@ const Sidebar = ({onSectionClick}) => {
   
     const handleLogout = async () => {
       const token = localStorage.getItem("authToken");
-      const apiEndpoint = "http://localhost:8001/api/logout";
+      const apiEndpoint = `${import.meta.env.VITE_API_URL}/logout`;
   
       const shouldClearToken = await logout(apiEndpoint, token);
   

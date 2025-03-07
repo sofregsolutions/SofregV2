@@ -18,10 +18,10 @@ const AdminDashboard = () => {
     const [attendanceData, setAttendanceData] = useState([]);
     const [attendanceDataToday, setAttendanceDataToday] = useState([]);
     const [summaryReport, setSummaryReport] = useState({})
-    const fetchEmployeeApi = "http://localhost:8001/api/admin/employee-account"
-    const fetchAttendanceApi = "http://localhost:8001/api/admin/employee-attendance"
-    const fetchExportAttendanceApi = "http://localhost:8001/api/admin/export-attendance"
-    const fetchSummaryApi = "http://localhost:8001/api/admin/summary"
+    const fetchEmployeeApi = `${import.meta.env.VITE_API_URL}/admin/employee-account`
+    const fetchAttendanceApi = `${import.meta.env.VITE_API_URL}/admin/employee-attendance`
+    const fetchExportAttendanceApi = `${import.meta.env.VITE_API_URL}/admin/export-attendance`
+    const fetchSummaryApi = `${import.meta.env.VITE_API_URL}/admin/summary`
     const data = JSON.parse(localStorage.getItem("authentication")) || {};
     useEffect(() => {
         if (!activeSection) return; // Only run when activeSection is set

@@ -14,8 +14,10 @@ const AccountTable = ({ accountData, onPageChange }) => {
     const [editModal, setEditModal] = useState(false)
     const closeEditAccountModal = () => setEditModal(false);
 
-    const editEmployeeUrlAPi = 'http://localhost:8001/api/admin/edit-employee'
-    const deleteEmployeeApi = "http://localhost:8001/api/admin/delete-employee";
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const editEmployeeUrlAPi = `${import.meta.env.VITE_API_URL}/admin/edit-employee`
+    const deleteEmployeeApi = `${import.meta.env.VITE_API_URL}/admin/delete-employee`;
 
     const editEmployee = async (emp_id) => {
         // alert(emp_id)
@@ -82,8 +84,29 @@ const AccountTable = ({ accountData, onPageChange }) => {
         });
     };
 
+    // Filter data based on search term
+  const filteredData = data.filter(
+    (item) =>
+      // console.log(item)
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.email.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      item.position.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.department.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.employee_id.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
     return (
         <div className="relative flex flex-col w-full">
+            <div className="flex justify-end mt-1">
+                {/* Search Input */}
+                <input
+                type="text"
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="text-color-dark p-1 ps-3 rounded-sm"
+                />
+            </div>
             <div className="flex-grow overflow-x-scroll overflow-y-hidden w-full bg-gray">
                 <table className="min-w-full">
                     <thead>
@@ -98,8 +121,8 @@ const AccountTable = ({ accountData, onPageChange }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.length > 0 ? (
-                            data.map((record, index) => (
+                        {filteredData.length > 0 ? (
+                            filteredData.map((record, index) => (
                                 <tr key={record.id} className={`text-center ${index % 2 === 0 ? 'bg-gray-400' : ''}`}>
                                     <td className="p-2 whitespace-nowrap font-bold">{record.employee_id}</td>
                                     <td className="p-2 whitespace-nowrap">{record.name}</td>

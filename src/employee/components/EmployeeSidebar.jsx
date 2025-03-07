@@ -4,7 +4,7 @@ import axios from "axios";
 // import Logo from "../../assets/imgs/logo-light.png"
 const EmployeeSidebar = () => {
     const [showLogoutModal, setShowLogoutModal] = useState(false);
-    const logout_url = "http://127.0.0.1:8001/api/logout";
+    const logout_url = `${import.meta.env.VITE_API_URL}/logout`;
 
     // confirmation function
     const toggleConfirmationPopup = () => {

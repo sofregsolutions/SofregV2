@@ -6,7 +6,7 @@ const useAuthenticate = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
-  const [apiUrl, setApiUrl] = useState("http://127.0.0.1:8001/api/login");
+  const [apiUrl, setApiUrl] = useState(`${import.meta.env.VITE_API_URL}/login`);
 
   const fetchData = async (employee_id, password) => {
     if (!employee_id) {

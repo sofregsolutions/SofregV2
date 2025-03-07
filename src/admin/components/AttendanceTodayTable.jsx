@@ -5,8 +5,8 @@ import ImageViewModal from "./ImageViewModal";
 
 
 const AttendanceTodayTable = ({ attendanceData, onPageChange }) => {
-    const attendanceViewApi = "http://localhost:8001/api/admin/view-attendance"
-    const imageUrl = "http://127.0.0.1:8001/api/storage"
+    const attendanceViewApi = `${import.meta.env.VITE_API_URL}/admin/view-attendance`
+    const imageUrl = `${import.meta.env.VITE_API_URL}/storage`
     const token = JSON.parse(localStorage.getItem("authentication")) || {};
 
     const data = attendanceData?.employee_attendance_today?.data || [];

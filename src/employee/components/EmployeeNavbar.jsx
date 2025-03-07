@@ -5,7 +5,7 @@ import axios from "axios";
 
 const EmployeeNavbar = () => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const logout_url = "http://127.0.0.1:8001/api/logout";
+  const logout_url = `${import.meta.env.VITE_API_URL}/logout`;
   const navigate = useNavigate();
 
   // confirmation function

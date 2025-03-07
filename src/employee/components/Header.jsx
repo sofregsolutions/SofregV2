@@ -19,9 +19,9 @@ const EmployeeHeader = () => {
     const [attendanceData, setAttendanceData] = useState([]);
 
     // api url
-    const insertAttendanceApi = "http://127.0.0.1:8001/api/employee/clockin";
-    const updateAttendanceApi = "http://127.0.0.1:8001/api/employee/clockout";
-    const fetchAttendanceApi = "http://127.0.0.1:8001/api/employee/attendance-by-week";
+    const insertAttendanceApi = `${import.meta.env.VITE_API_URL}/employee/clockin`;
+    const updateAttendanceApi = `${import.meta.env.VITE_API_URL}/employee/clockout`;
+    const fetchAttendanceApi = `${import.meta.env.VITE_API_URL}/employee/attendance-by-week`;
 
     const data = JSON.parse(localStorage.getItem("authentication")) || {};
     const alreadyClockin = JSON.parse(localStorage.getItem('attendance-save')) || {};

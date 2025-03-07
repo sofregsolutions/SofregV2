@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const AccountModal = ({ onClose }) => {
-    const addEmployeeAccountApi = "http://localhost:8001/api/admin/employee-account";
+    const addEmployeeAccountApi = `${import.meta.env.VITE_API_URL}/admin/employee-account`;
     const [formData, setFormData] = useState({
         employeeId: "",
         name: "",

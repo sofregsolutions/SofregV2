@@ -4,7 +4,7 @@ const AttendanceModal = ({ employeeData, onClose }) => {
     // console.log(employeeData)
     const isScrollable = employeeData.attendance_records.length > 5;
 
-    const imageUrl = "http://127.0.0.1:8001/api/storage"
+    const imageUrl = `${import.meta.env.VITE_API_URL}/storage`
     if (!employeeData || employeeData.length === 0) {
         return (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">

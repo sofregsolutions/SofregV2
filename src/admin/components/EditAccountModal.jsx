@@ -3,7 +3,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 const EditAccountModal = ({ data, onClose }) => {
-    const updateEmployeeAccountApi = "http://localhost:8001/api/admin/update-employee";
+    const updateEmployeeAccountApi = `${import.meta.env.VITE_API_URL}/admin/update-employee`;
     
 
     const [formData, setFormData] = useState({
