@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 // import Logo from "../../assets/imgs/logo-light.png"
-const EmployeeSidebar = () => {
+const EmployeeSidebar = ({onMenuClick}) => {
     const [showLogoutModal, setShowLogoutModal] = useState(false);
     const logout_url = `${import.meta.env.VITE_API_URL}/logout`;
 
@@ -79,9 +79,9 @@ const EmployeeSidebar = () => {
 
     // const [isOpen, setIsOpen] = useState(false);
     const menuItems = [
-        ["Dashboard", "/employee"],
+        ["Dashboard", "/employee", "dashboard"],
         // ["Clocking", "#"],
-        ["Attendance Record", "#"],
+        ["Attendance Record", "#", "record"],
         ["Logout", "#"],
     ];
 
@@ -127,6 +127,7 @@ const EmployeeSidebar = () => {
                                                 </button>
                                             ) : (
                                                 <Link
+                                                onClick={()=>onMenuClick(item[2])}
                                                     to={item[1]}
                                                     className="link cursor-pointer dmenu"
                                                 >

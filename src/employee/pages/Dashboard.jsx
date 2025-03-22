@@ -35,7 +35,7 @@ const EmployeeDashboard = () => {
       <ProgressScrollButton />
       {/* Pass handleMenuClick to EmployeeNavbar */}
       <EmployeeNavbar onMenuClick={handleMenuClick}/>
-      <EmployeeSidebar />
+      <EmployeeSidebar onMenuClick={handleMenuClick}/>
 
       <div id="smooth-content" className="overflow-hidden">
         {/* <EmployeeHeader /> */}
