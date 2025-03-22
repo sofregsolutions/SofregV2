@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-const AttendanceTable = ({ attendanceData, onPageChange }) => {
+const AttendanceTable = ({ attendanceData, onPageChange,tableTitle }) => {
   const data = attendanceData?.attendance?.data || [];
   const currentPage = attendanceData?.attendance?.current_page;
   const lastPage = attendanceData?.attendance?.last_page;
@@ -29,7 +29,8 @@ const AttendanceTable = ({ attendanceData, onPageChange }) => {
 
   return (
     <div className="relative flex flex-col w-full">
-      <div className="flex justify-end mt-1 pe-1">
+      <div className="flex justify-between mt-1 p-2 px-4">
+        <h1>{tableTitle}</h1>
         {/* Search Input */}
         <input
           type="text"

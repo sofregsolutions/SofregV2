@@ -203,7 +203,7 @@ const EmployeeHeader = () => {
 
                                 </div>
                                 <div className="right bg-color-gray col-span-3 rounded-md">
-                                    <AttendanceTable attendanceData={attendanceData} onPageChange={handlePageChange} />
+                                    <AttendanceTable attendanceData={attendanceData} onPageChange={handlePageChange} tableTitle={"Weekly Attendance"}/>
                                 </div>
                             </div>
                         </div>

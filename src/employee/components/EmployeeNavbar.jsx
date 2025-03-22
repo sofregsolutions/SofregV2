@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
-const EmployeeNavbar = () => {
+const EmployeeNavbar = ({onMenuClick}) => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const logout_url = `${import.meta.env.VITE_API_URL}/logout`;
   const navigate = useNavigate();
@@ -50,8 +50,8 @@ const EmployeeNavbar = () => {
   };
 
   const menuItems = [
-    { name: "Dashboard", link: "/employee" },
-    { name: "Attendance Record", link: "#" },
+    { name: "Dashboard", link: "/employee", title:'dashboard' },
+    { name: "Attendance Record", link: "#", title:'record' },
   ];
 
   return (
@@ -81,7 +81,7 @@ const EmployeeNavbar = () => {
         <div className="hidden laptop:block justify-content-center" id="navbarSupportedContent">
           <ul className="navbar-nav">
             {menuItems.map((item, index) => (
-              <li className="nav-item" key={index}>
+              <li className="nav-item" key={index} onClick={() => onMenuClick(item.title)}>
                 <Link className="nav-link" to={item.link} data-scroll-nav={index}>
                   <span className="rolling-text">{item.name}</span>
                 </Link>

@@ -1,22 +1,49 @@
 import React from "react";
+import axios from "axios";
 import { useLocation, Link } from "react-router-dom";
 const Sidebar = ({onSectionClick}) => {
     const location = useLocation();  // Get the current location (path)
     const currentPath = location.pathname;  // Get the current route path
-  
-    const handleLogout = async () => {
-      const token = localStorage.getItem("authToken");
-      const apiEndpoint = `${import.meta.env.VITE_API_URL}/logout`;
-  
-      const shouldClearToken = await logout(apiEndpoint, token);
-  
-    };
+    const logout_url = `${import.meta.env.VITE_API_URL}/logout`;
   
     const navItems = [
       { id: "dashboard", section:"dashboard", label: "Dashboard", icon: "fas fa-home", url: "#" },
       { id: "account", section:"account", label: "Employee", icon: "fas fa-user", url: "#" },
       { id: "attendance", section:"attendance", label: "Attendance", icon: "fas fa-clock", url: "#" },
     ];
+  
+    const logout = async () => {
+      const data = JSON.parse(localStorage.getItem("authentication")) || {};
+      console.log(data.token); // Check if this logs
+  
+      if (!data.token) {
+        console.log("No token found!");
+        return;
+      }
+  
+      try {
+        const response = await axios.post(
+          logout_url,
+          {},
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: `Bearer ${data.token}`,
+            },
+          }
+        );
+  
+        console.log("API response:", response.data);
+  
+        if (response.status === 200) {
+          localStorage.removeItem("authentication"); // Clear frontend token
+          window.location.reload(true); // Redirect to login page
+        }
+      } catch (error) {
+        console.error("Error logging out:", error.response ? error.response.data : error.message);
+      }
+    };
   
     return (
       <div className="bg-gray-800 text-white h-screen p-4 transition-all duration-300 w-16 tablet:w-64 flex flex-col items-center tablet:items-start">
@@ -49,6 +76,7 @@ const Sidebar = ({onSectionClick}) => {
   
           {/* Logout Button */}
           <button
+            onClick={logout}
             className="absolute bottom-0 flex items-center gap-2 space-x-3 tablet:space-x-0 tablet:block text-red-400 cursor-pointer hover:text-red-500"
           >
             <i className="fas fa-sign-out-alt text-2xl tablet:text-xl"></i>
