@@ -29,7 +29,7 @@ const AttendanceTable = ({ attendanceData, onPageChange,tableTitle }) => {
 
   return (
     <div className="relative flex flex-col w-full">
-      <div className="flex justify-between mt-1 p-2 px-4">
+      <div className="flex flex-col phone:flex-row justify-between mt-1 p-2 px-4">
         <h1>{tableTitle}</h1>
         {/* Search Input */}
         <input
