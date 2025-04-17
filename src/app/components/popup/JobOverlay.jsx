@@ -19,7 +19,7 @@ const JobOverlay = ({ details, onClose }) => {
 
     const [responseMessage, setResponseMessage] = useState('');
     const [loading, setLoading] = useState(false);
-
+    console.log(details)
     if (!details) return null; // If details are not available, do not render the modal.
 
     // Handle input changes
@@ -179,12 +179,12 @@ const JobOverlay = ({ details, onClose }) => {
 
                             <span className="flex flex-col w-full">
                                 <span className="text-2xl laptop:text-3xl font-bold">
-                                    {details.title}
+                                    {details?.title}
                                 </span>
                                 <span className="text-sm">
-                                    {details.address}
+                                    {details?.address}
                                 </span>
-                                <span className="text-xs text-gray-500">• {formatDistanceToNow(new Date(details.date), { addSuffix: true })}</span>
+                                <span className="text-xs text-gray-500">• {formatDistanceToNow(new Date(details?.date_posted), { addSuffix: true })}</span>
                                 <span className=""> <span className="text-sm border w-fit px-1 mt-2 rounded-sm me-2">Full-Time</span>
                                     <span className="text-sm border w-fit px-1 mt-2 rounded-sm">Work From Home</span></span>
                             </span>
@@ -194,19 +194,19 @@ const JobOverlay = ({ details, onClose }) => {
 
                         <span className="w-full laptop:w-[50%] p-10 py-6 flex flex-col gap-3 bg-[#1d1d1d] h-[400px] overflow-y-auto">
                             <span className="flex-1 text-xl font-bold text-color-primary-blue"><i className="fas fa-clipboard-list text-xl"></i> Job Description: </span>
-                            <span className="phone:text-xl text-gray-300">{details.description}</span>
+                            <span className="phone:text-xl text-gray-300">{details?.description}</span>
                             <span className="flex-1 text-xl font-bold text-color-primary-blue"><i className="fas fa-check-circle text-color-primary-blue text-xl"></i> Key Responsibilities: </span>
                             <span className="flex flex-col gap-2 phone:text-xl">
-                                {details.responsibilities.map((item, index) => (
-                                    <span key={index}><span>✔</span> {item}</span>
+                                {details?.responsibilities?.map((item, index) => (
+                                    <span key={index}><span>✔</span> {item?.responsibility}</span>
                                 ))}
                             </span>
-                            <span className={`flex-1 text-xl font-bold text-color-primary-blue ${details.requirements?.length > 0 ? 'block' : 'hidden'}`}><i className="fas fa-check-circle text-color-primary-blue text-xl"></i> Requirements: </span>
+                            <span className={`flex-1 text-xl font-bold text-color-primary-blue ${details?.requirements?.length > 0 ? 'block' : 'hidden'}`}><i className="fas fa-check-circle text-color-primary-blue text-xl"></i> Requirements: </span>
                             <span className="flex flex-col gap-2 phone:text-xl">
-                                {details.requirements?.length > 0 &&
-                                    details.requirements.map((item, index) => (
+                                {details?.requirements?.length > 0 &&
+                                    details?.requirements?.map((item, index) => (
                                         <span key={index}>
-                                            <span>✔</span> {item}
+                                            <span>✔</span> {item?.requirement}
                                         </span>
                                     ))}
                             </span>
@@ -214,7 +214,7 @@ const JobOverlay = ({ details, onClose }) => {
                             <span className="phone:text-xl"> Join our team and be a part of a forward-thinking company that values innovation and creativity!</span>
                             <span className="phone:text-xl">  Interested candidates should send their resume and portfolio by clicking the button below. </span>
                             <span className="phone:text-xl">  Applications will be reviewed on a rolling basis until the positions are filled. </span>
-                            {details.requirements?.length > 0 && (
+                            {details?.status === "open" && (
                             <a href="https://forms.gle/hCr6UsrC7c154sWc7" target="_blank" rel="noopener noreferrer" className="hover:bg-color-gray cursor-pointer bg-color-primary-blue w-fit p-2 rounded-sm">
                                 Apply Now
                             </a>

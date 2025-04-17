@@ -3,15 +3,33 @@ import { jobListings } from "../../data/job_listing";
 import imagesLoaded from "imagesloaded";
 import Isotope from "isotope-layout";
 import { formatDistanceToNow } from 'date-fns';
+import axios from "axios"; 
 
 const SectionContent = ({openModal}) => {
     const galleryRef = useRef(null); // Ref for the gallery container
     const [isotopeInstance, setIsotopeInstance] = useState(null); // Store the Isotope instance
     const [activeFilter, setActiveFilter] = useState("*"); // Track active filter
-    
+    const [jobs, setJobData] = useState(null);
 
     useEffect(() => {
-        if (galleryRef.current && !isotopeInstance) {
+        const fetchJobData = async () => {
+            try {
+                const jobApi = `${import.meta.env.VITE_API_URL}/career/jobs`;
+
+                console.log('Fetching initial jobs data...');
+                const responsejobs = await axios.get(jobApi);
+                console.log('Initial jobs data:', responsejobs.data.jobs);
+                // setEmployeeData(response.data);
+                setJobData(responsejobs?.data?.jobs)
+            } catch (error) {
+                console.error(`Failed to fetch data:`, error.responsejobs?.data || error.message);
+            }
+        };
+        fetchJobData();
+    }, []);
+    // console.log(jobs)
+    useEffect(() => {
+        if (galleryRef.current && jobs && !isotopeInstance) {
             // Initialize Isotope only if the galleryRef is ready
             const instance = new Isotope(galleryRef.current, {
                 itemSelector: ".items", // Class for items in the gallery
@@ -37,7 +55,7 @@ const SectionContent = ({openModal}) => {
                 }
             };
         }
-    }, [galleryRef, isotopeInstance]);
+    }, [galleryRef, isotopeInstance, jobs]);
 
     useEffect(() => {
         if (isotopeInstance) {
@@ -55,9 +73,10 @@ const SectionContent = ({openModal}) => {
             isotopeInstance.layout();
           });
         }
-      }, [activeFilter, isotopeInstance]);
+      }, [activeFilter, isotopeInstance, jobs]);
     
       const handleFilterClick = (filterValue) => {
+        console.log(filterValue)
         // setHoveredFilter(filterValue);
         setActiveFilter(filterValue); // Update the active filter
     
@@ -78,9 +97,9 @@ const SectionContent = ({openModal}) => {
                                 Show All
                             </span>
 
-                            {jobListings.map((job, index) => (
-                                <span className={activeFilter === `${job.code}` ? "active" : ""} key={index} data-filter={`${job.code}`} onClick={() => handleFilterClick(job.code)}>
-                                    {job.title}
+                            {jobs?.map((job, index) => (
+                                <span className={activeFilter === `${job?.code}` ? "active" : ""} key={index} data-filter={`${job?.code}`} onClick={() => handleFilterClick(job?.code)}>
+                                    {job?.title}
                                 </span>
                             ))}
 
@@ -91,8 +110,8 @@ const SectionContent = ({openModal}) => {
                 <span className="block mb-4 text-xl">We're excited to announce that Sofreg Solutions is expanding our dynamic team! We’re on the lookout for talented professionals to fill the following positions:</span>
 
                 <div className="gallery row stand-marg" ref={galleryRef}>
-                    {jobListings.map((job, index) => (
-                        <div key={index} className={`col-lg-6 col-md-6 transition-transform transform scale-100 hover:scale-110 duration-300 items ${job.code}`}>
+                    {jobs?.map((job, index) => (
+                        <div key={index} className={`col-lg-6 col-md-6 transition-transform transform scale-100 hover:scale-110 duration-300 items ${job?.code}`}>
                             {/* <img src="/assets/PNG/LOGO_WHITE.png" className="absolute -top-5 left-1/2 transform -translate-x-1/2 w-12 p-2 rounded-md bg-color-primary-blue" alt="logo" /> */}
                             <div className="item mb-40 bg-[#181616] rounded-sm h-[220px]">
                                 <div className="h-full flex items-center"> {/* Changed to justify-start */}
@@ -102,11 +121,15 @@ const SectionContent = ({openModal}) => {
 
                                         {/* Text container that can wrap and grow */}
                                         <div className="w-fit">
-                                            <span className="text-2xl font-bold block">{job.title}</span> {/* block for text to properly wrap */}
-                                            <span className="text-sm">{job.address}</span>
-                                            <span className="block text-xs text-gray-500">• {formatDistanceToNow(new Date(job.date), { addSuffix: true })}</span>
+                                            <span className="text-2xl font-bold block">{job?.title}</span> {/* block for text to properly wrap */}
+                                            <span className="text-sm">{job?.address}</span>
+                                            <span className={`block text-xs ${job?.status === 'open' ? 'text-green-500' : 'text-red-500'}`}>
+                                                • {job?.status === 'open' ? 'Open for application.' : 'No longer accepting applicants.'}
+                                            </span>
+
+                                            <span className="block text-xs text-gray-500">• {formatDistanceToNow(new Date(job?.date_posted), { addSuffix: true })}</span>
                                             <div className="flex items-center gap-2 text-sm mt-2">
-                                                <span className={`px-1 rounded-sm ${job.status != 'open' ? 'text-red-500' : 'text-green-600'}`}>{job.status}</span>
+                                                <span className={`px-1 rounded-sm ${job?.status != 'open' ? 'text-red-500' : 'text-green-600'}`}>{job?.status}</span>
                                                 <span className="px-1 rounded-sm text-xs">Full-Time (WFH)</span>
                                                 <span  
                                                     onClick={() => openModal(job)}

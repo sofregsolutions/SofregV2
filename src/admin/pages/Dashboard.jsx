@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import AccountTable from "../components/AccountTable";
+import JobTable from "../components/JobsTable";
 import AccountModal from "../components/AccountModal";
+import JobModal from "../components/JobModal";
+
 import Pusher from "pusher-js";
 import axios from "axios";
 import AttendanceTable from "../components/AttendanceTable";
@@ -10,11 +13,13 @@ import { saveAs } from 'file-saver';
 import AttendanceTodayTable from "../components/AttendanceTodayTable";
 
 const AdminDashboard = () => {
-    const [activeSection, setActiveSection] = useState("dashboard");
+    const [activeSection, setActiveSection] = useState(()=>{
+        return localStorage.getItem('active-session') || 'dashboard';
+    });
     const [employeeAccountModal, setEmployeeAccountModal] = useState(false);
-    const openAccountModal = () => setEmployeeAccountModal(true);
-    const closeAccountModal = () => setEmployeeAccountModal(false);
+    const [jobPostingModal, setJobPostingModal] = useState(false);
     const [employeeData, setEmployeeData] = useState([]);
+    const [jobData, setJobData] = useState([]);
     const [attendanceData, setAttendanceData] = useState([]);
     const [attendanceDataToday, setAttendanceDataToday] = useState([]);
     const [summaryReport, setSummaryReport] = useState({})
@@ -22,7 +27,15 @@ const AdminDashboard = () => {
     const fetchAttendanceApi = `${import.meta.env.VITE_API_URL}/admin/employee-attendance`
     const fetchExportAttendanceApi = `${import.meta.env.VITE_API_URL}/admin/export-attendance`
     const fetchSummaryApi = `${import.meta.env.VITE_API_URL}/admin/summary`
+    const fetchJobApi = `${import.meta.env.VITE_API_URL}/admin/jobs`
     const data = JSON.parse(localStorage.getItem("authentication")) || {};
+
+    const openAccountModal = () => setEmployeeAccountModal(true);
+    const closeAccountModal = () => setEmployeeAccountModal(false);
+
+    const openJobModal = () => setJobPostingModal(true);
+    const closeJobModal = () => setJobPostingModal(false);
+
     useEffect(() => {
         if (!activeSection) return; // Only run when activeSection is set
 
@@ -69,8 +82,25 @@ const AdminDashboard = () => {
             }
         };
 
+        const fetchJobData = async () => {
+            try {
+                console.log('Fetching initial jobs data...');
+                const responsejobs = await axios.get(fetchJobApi, {
+                    headers: {
+                        'Authorization': `Bearer ${data.token}`
+                    }
+                });
+                console.log('Initial jobs data:', responsejobs.data);
+                // setEmployeeData(response.data);
+                setJobData(responsejobs.data)
+            } catch (error) {
+                console.error(`Failed to fetch ${activeSection.toLowerCase()} data:`, error.responsejobs?.data || error.message);
+            }
+        };
+
         fetchInitialData();
-        fetchSumaryData()
+        fetchSumaryData();
+        fetchJobData();
         // Enable pusher logging - remove this in production
         Pusher.logToConsole = true;
 
@@ -154,6 +184,20 @@ const AdminDashboard = () => {
             console.error('Failed to fetch paginated data:', error);
         }
     };
+    // for jobs 
+    const handlePageChangeJobs = async (page) => {
+        try {
+
+            const response = await axios.get(`${fetchJobApi}?page=${page}`, {
+                headers: {
+                    'Authorization': `Bearer ${data.token}`
+                }
+            });
+            setJobData(response.data);
+        } catch (error) {
+            console.error('Failed to fetch paginated data:', error);
+        }
+    };
 
     //export attendance data to excel
     const exportAttendanceToExcel = async () => {
@@ -214,6 +258,24 @@ const AdminDashboard = () => {
                         </div>
                     </div>
                 );
+            case "jobs":
+                return (
+                    <div className="">
+                        <div className="flex flex-col tablet:flex-row tablet:items-center justify-between">
+                            <div>
+                                <h1 className="text-xl tablet:text-2xl font-bold">Job Posting Management</h1>
+                                <p>Manage your job postings here.</p>
+
+                            </div>
+                            <div>
+                                <button onClick={openJobModal} type="button" className="border p-1">Create Job</button>
+                            </div>
+                        </div>
+                        <div className="overflow-x-auto">
+                            <JobTable jobData={jobData} onPageChange={handlePageChangeJobs} />
+                        </div>
+                    </div>
+                );
             case "attendance":
                 return (
                     <div>
@@ -271,6 +333,7 @@ const AdminDashboard = () => {
 
             {/* Add Employee Account Modal */}
             {employeeAccountModal && <AccountModal onClose={closeAccountModal} />}
+            {jobPostingModal && <JobModal onClose={closeJobModal} />}
         </div>
     );
 };

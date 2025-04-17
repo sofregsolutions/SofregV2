@@ -10,6 +10,7 @@ const Sidebar = ({onSectionClick}) => {
       { id: "dashboard", section:"dashboard", label: "Dashboard", icon: "fas fa-home", url: "#" },
       { id: "account", section:"account", label: "Employee", icon: "fas fa-user", url: "#" },
       { id: "attendance", section:"attendance", label: "Attendance", icon: "fas fa-clock", url: "#" },
+      { id: "jobs", section:"jobs", label: "Job Posting", icon: "fas fa-file-alt", url: "#" },
     ];
   
     const logout = async () => {
@@ -64,6 +65,7 @@ const Sidebar = ({onSectionClick}) => {
             <div
               onClick={() => {
                 console.log("Clicked", item.section);
+                localStorage.setItem('active-session',item.section)
                 onSectionClick(item.section)}}
               // to={item.url}
               key={item.id}
